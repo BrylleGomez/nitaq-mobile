@@ -1,13 +1,8 @@
 package com.brylle.nitaq_mobapp;
 
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,20 +10,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.brylle.aus_cs_app_android_j.AppUtils;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class EventsFragment extends Fragment {
 
     /* Variables */
@@ -40,11 +36,10 @@ public class EventsFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestoreEventList = firebaseFirestore.collection("events");    // retrieve reference to "events" collection
 
-    /* Initializer Functions */
-
     public EventsFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,26 +57,26 @@ public class EventsFragment extends Fragment {
 
         // Fetches all event database entries and stores them in an array list of event objects
         firestoreEventList.get()                                                // Fetch all event entries from database
-            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot fetchedEvents) {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot fetchedEvents) {
 
-                    for (DocumentSnapshot fetchedEvent : fetchedEvents) {       // Iterate through all fetched events
-                        addFetchedEventToArrayList(fetchedEvent);
+                        for (DocumentSnapshot fetchedEvent : fetchedEvents) {       // Iterate through all fetched events
+                            addFetchedEventToArrayList(fetchedEvent);
+                        }
+
+                        // load recycler view from adapter
+                        loadRecyclerView();
+
                     }
 
-                    // load recycler view from adapter
-                    loadRecyclerView();
-
-                }
-
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("EventsFragment", "Error fetching events: ", e);
-                }
-            });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("EventsFragment", "Error fetching events: ", e);
+                    }
+                });
 
     }
 
