@@ -1,6 +1,8 @@
 package com.brylle.nitaq_mobapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
     LinearLayout layout;
@@ -32,23 +38,26 @@ public class ChatActivity extends AppCompatActivity {
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
 
-//        Firebase.setAndroidContext(this);
-//        reference1 = new Firebase("https://chatapp-60323.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
-//        reference2 = new Firebase("https://chatapp-60323.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String messageText = messageArea.getText().toString();
 
-//                if(!messageText.equals("")){
-//                    Map<String, String> map = new HashMap<String, String>();
-//                    map.put("message", messageText);
-//                    map.put("user", UserDetails.username);
-//                    reference1.push().setValue(map);
-//                    reference2.push().setValue(map);
-//                    messageArea.setText("");
-//                }
+                if(!messageText.equals("")){
+                    addMessageBox(messageText, 2);
+                    messageArea.setText("");
+
+                    new CountDownTimer(2000, 1000) {
+                        public void onFinish() {
+                            addMessageBox("I'm a bot!", 1);
+                        }
+
+                        public void onTick(long millisUntilFinished) {
+                            // millisUntilFinished    The amount of time until finished.
+                        }
+                    }.start();
+                }
             }
         });
 
@@ -94,15 +103,19 @@ public class ChatActivity extends AppCompatActivity {
         textView.setText(message);
 
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp2.setMargins(3,3,3,3);
         lp2.weight = 7.0f;
-
+        textView.setPadding(25,15,25,25);
+        textView.setTextSize(20);
         if(type == 1) {
             lp2.gravity = Gravity.LEFT;
             textView.setBackgroundResource(R.drawable.bubble_in);
+            textView.setTextColor(Color.WHITE);
         }
         else{
             lp2.gravity = Gravity.RIGHT;
             textView.setBackgroundResource(R.drawable.bubble_out);
+            textView.setTextColor(Color.WHITE);
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);
