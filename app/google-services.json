@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "838461415327",
+    "firebase_url": "https://nitaq-7de81.firebaseio.com",
+    "project_id": "nitaq-7de81",
+    "storage_bucket": "nitaq-7de81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838461415327:android:14dee855b4a35446eaa7aa",
+        "android_client_info": {
+          "package_name": "com.brylle.nitaq_mobapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838461415327-kl1rg7te6cechbf4un7ck0gs6fbvqhnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brylle.nitaq_mobapp",
+            "certificate_hash": "0ab9a0d574bb8a73c64d5c22f57c886f2fc38cd0"
+          }
+        },
+        {
+          "client_id": "838461415327-v0vt0oo4hukm795lcfknumg1t1fa298c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAa--Lzmc-NJdN0YkaRm6TvrKHkw3bq-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838461415327-v0vt0oo4hukm795lcfknumg1t1fa298c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
