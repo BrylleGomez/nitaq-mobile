@@ -1,8 +1,19 @@
 package com.brylle.nitaq_mobapp;
 
+<<<<<<< HEAD
 
 import android.content.Intent;
 import android.os.Bundle;
+=======
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+>>>>>>> 55cf97a5a7f4e7aeaf96a217258fe122c70fbf61
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+<<<<<<< HEAD
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,35 +29,62 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+=======
+import com.brylle.aus_cs_app_android_j.AppUtils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+>>>>>>> 55cf97a5a7f4e7aeaf96a217258fe122c70fbf61
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
+<<<<<<< HEAD
 /**
  * A simple {@link Fragment} subclass.
  */
+=======
+>>>>>>> 55cf97a5a7f4e7aeaf96a217258fe122c70fbf61
 public class EventsFragment extends Fragment {
 
     /* Variables */
 
     private ArrayList<Event> eventsList = new ArrayList<>();                                                // list to store event objects retrieved from Firebase
     private RecyclerView eventsView;                                                                        // recycler view to display objects
+<<<<<<< HEAD
     private EventAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();                         // retrieve current Firebase user
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestoreEventList = firebaseFirestore.collection("events");    // retrieve reference to "events" collection
+=======
+
+
+    /* Initializer Functions */
+>>>>>>> 55cf97a5a7f4e7aeaf96a217258fe122c70fbf61
 
     public EventsFragment() {
         // Required empty public constructor
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55cf97a5a7f4e7aeaf96a217258fe122c70fbf61
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+<<<<<<< HEAD
         return inflater.inflate(R.layout.fragment_events, container, false);
+=======
+        return inflater.inflate(R.layout.fragment_downloaded, container, false);
+>>>>>>> 55cf97a5a7f4e7aeaf96a217258fe122c70fbf61
     }
 
     @Override
@@ -57,6 +96,7 @@ public class EventsFragment extends Fragment {
 
         // Fetches all event database entries and stores them in an array list of event objects
         firestoreEventList.get()                                                // Fetch all event entries from database
+<<<<<<< HEAD
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot fetchedEvents) {
@@ -77,6 +117,28 @@ public class EventsFragment extends Fragment {
                         Log.d("EventsFragment", "Error fetching events: ", e);
                     }
                 });
+=======
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot fetchedEvents) {
+
+                    for (DocumentSnapshot fetchedEvent : fetchedEvents) {       // Iterate through all fetched events
+                        addFetchedEventToArrayList(fetchedEvent);
+                    }
+
+                    // load recycler view from adapter
+                    loadRecyclerView();
+
+                }
+
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("EventsFragment", "Error fetching events: ", e);
+                }
+            });
+>>>>>>> 55cf97a5a7f4e7aeaf96a217258fe122c70fbf61
 
     }
 

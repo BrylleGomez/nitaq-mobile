@@ -18,7 +18,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/shop_name"
+                android:id="@+id/course_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -30,7 +30,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/shop_des"
+                android:id="@+id/course_des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -41,7 +41,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>
 
