@@ -1,7 +1,8 @@
-package com.brylle.aus_cs_app_android_j;
+package com.brylle.nitaq_mobapp;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Locale;
 
 public class AppUtils {
 
