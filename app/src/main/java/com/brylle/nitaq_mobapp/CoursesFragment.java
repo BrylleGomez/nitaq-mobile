@@ -1,6 +1,8 @@
 package com.brylle.nitaq_mobapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ public class CoursesFragment extends Fragment {
     private CoursesAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
+    private SharedPreferences prefs;
 
     /* Initializer Functions */
 
@@ -59,6 +62,12 @@ public class CoursesFragment extends Fragment {
 
         // Initialize Objects
         eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
+        prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
+
+        // test - clear /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
 
 //        // Fetches all event database entries and stores them in an array list of event objects
 //        for (int i = 0; i < 10; i++) {
@@ -72,7 +81,14 @@ public class CoursesFragment extends Fragment {
                 public void onSuccess(QuerySnapshot fetchedPackages) {
 
                     for (DocumentSnapshot fetchedPackage : fetchedPackages) {       // Iterate through all fetched events
-                        addFetchedEventToArrayList(fetchedPackage);
+
+                        // check if package is part of downloaded
+                        String tempModule = fetchedPackage.getString(AppUtils.KEY_MODULE);
+                        String downloaded = prefs.getString(tempModule, "0");
+                        if (downloaded.equals("0")) {
+                            addFetchedEventToArrayList(fetchedPackage);
+                        }
+
                     }
 
                     // load recycler view from adapter

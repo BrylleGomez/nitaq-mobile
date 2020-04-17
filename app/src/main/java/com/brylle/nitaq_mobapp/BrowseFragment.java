@@ -146,18 +146,16 @@ public class BrowseFragment extends Fragment {
             public void onItemClick(Package pkg) {
                 // Bind a click listener to the reyclerview item
 
-                Toast.makeText(getContext(), "Wow", Toast.LENGTH_SHORT).show();
-
                 // Check if already downloaded
                 String downloaded = prefs.getString(pkg.getModule(), "0");
                 if (downloaded.equals("0")) {
                     // save the instance variables
                     Editor editor = prefs.edit();
                     editor.putString(pkg.getModule(), pkg.getModule());
-                    Log.d("BrowseFragment", "Saving " + pkg.getModule() + " to SharedPrefs");
+                    Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
                     editor.apply();
                 } else {
-                    Log.d("BrowseFragment", pkg.getModule() + " already downloaded!");
+                    Toast.makeText(getContext(), "Already saved...", Toast.LENGTH_SHORT).show();
                 }
 
             }

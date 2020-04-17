@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    Fragment efragment = new CoursesFragment();
-    Fragment pfragment = new BrowseFragment();
+    Fragment pfragment = new CoursesFragment();
+    Fragment efragment = new BrowseFragment();
     String data;
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 // Create document
                 final HashMap<String,Object> entry = new HashMap<>();
                 entry.put(AppUtils.KEY_SUBJECT, "Math");
-                entry.put(AppUtils.KEY_TOPIC, "Math");
-                entry.put(AppUtils.KEY_MODULE, "Math");
+                entry.put(AppUtils.KEY_TOPIC, "Calculus");
+                entry.put(AppUtils.KEY_MODULE, "Integration by Parts");
                 ArrayList<String> lessons = new ArrayList<>(); lessons.add("L1"); lessons.add("L2"); lessons.add("L3");
                 entry.put(AppUtils.KEY_LESSONS, lessons);
                 ArrayList<String> questions = new ArrayList<>(); questions.add("Q1"); questions.add("Q2"); questions.add("Q3");
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 entry.put(AppUtils.KEY_NEXT, next);
 
                 // Upload document to Firestore (nested inside above addOnSuccessListener)
-                firestorePackageList.document("package_2").set(entry).addOnCompleteListener(new OnCompleteListener<Void>() {
+                firestorePackageList.document("package_3").set(entry).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
