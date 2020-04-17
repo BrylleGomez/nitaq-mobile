@@ -107,6 +107,15 @@ public class BrowseFragment extends Fragment {
 
     /* Helper Functions */
 
+    private void refreshFragment() {
+        browseList = new ArrayList<>(); // reset arraylist
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
+    }
+
     private void addFetchedEventToArrayList(DocumentSnapshot fetchedPackage) {
 
         // Store info of each fetched event in temp variable
@@ -163,13 +172,7 @@ public class BrowseFragment extends Fragment {
                     editor.apply();
 
                     // refresh -- very conky pls replace
-                    if (getActivity().getSupportFragmentManager() != null) {
-                        Toast.makeText(getContext(), "Yay!", Toast.LENGTH_SHORT).show();
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(BrowseFragment.this.getId(), new BrowseFragment()).commit();
-                    } else {
-                        Toast.makeText(getContext(), "Null!", Toast.LENGTH_SHORT).show();
-                    }
-
+                    refreshFragment();
 
                 } else {
                     Toast.makeText(getContext(), "Already downloaded...", Toast.LENGTH_SHORT).show();
