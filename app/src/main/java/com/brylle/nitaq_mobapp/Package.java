@@ -17,6 +17,8 @@ public class Package {
     private String module;
     private ArrayList<String> lessons;
     private ArrayList<String> questions;
+    private ArrayList<String> answers;
+    private ArrayList<String> correct_answers;
     private ArrayList<String> next;
 
     // constructor
@@ -26,12 +28,16 @@ public class Package {
             String module,
             ArrayList<String> lessons,
             ArrayList<String> questions,
+            ArrayList<String> answers,
+            ArrayList<String> correct_answers,
             ArrayList<String> next) {
         this.subject = subject;
         this.topic = topic;
         this.module = module;
         this.lessons = lessons;
         this.questions = questions;
+        this.answers = answers;
+        this.correct_answers = correct_answers;
         this.next = next;
     }
 
@@ -60,9 +66,16 @@ public class Package {
         return questions;
     }
 
+    public ArrayList<String> getAnswers() {
+        return answers;
+    }
+
+    public ArrayList<String> getCorrect_answers() {
+        return correct_answers;
+    }
+
     public ArrayList<String> getNext() {
         return next;
     }
-
 }
 

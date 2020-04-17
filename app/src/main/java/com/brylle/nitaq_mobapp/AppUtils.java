@@ -12,6 +12,8 @@ public class AppUtils {
     public static String KEY_MODULE = "module";
     public static String KEY_LESSONS = "lessons";
     public static String KEY_QUESTIONS = "questions";
+    public static String KEY_ANSWERS = "answers";
+    public static String KEY_CORRECT_ANSWERS = "correct_answers";
     public static String KEY_NEXT = "next";
 
 }

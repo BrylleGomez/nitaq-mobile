@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 
 import java.util.ArrayList;
 
-public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.EventViewHolder> {
+public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.EventViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(Package event);
@@ -20,14 +20,14 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.EventVie
     private ArrayList<Package> list;
     private OnItemClickListener clickListener;
 
-    public PackageAdapter(ArrayList<Package> arrayList, OnItemClickListener clickListener) {
+    public CoursesAdapter(ArrayList<Package> arrayList, OnItemClickListener clickListener) {
         this.list = arrayList;
         this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
-    public PackageAdapter.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CoursesAdapter.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_courses_package_viewholder,parent,false);
 
@@ -35,7 +35,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.EventVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PackageAdapter.EventViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CoursesAdapter.EventViewHolder holder, int position) {
         holder.bind(list.get(position), clickListener);
     }
 

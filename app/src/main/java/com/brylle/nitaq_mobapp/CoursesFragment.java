@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,9 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class CoursesFragment extends Fragment {
@@ -36,8 +36,7 @@ public class CoursesFragment extends Fragment {
 
     private ArrayList<Package> eventsList = new ArrayList<>();                                                // list to store event objects retrieved from Firebase
     private RecyclerView eventsView;
-    private PackageAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
-//    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();                         // retrieve current Firebase user
+    private CoursesAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
 
@@ -104,32 +103,6 @@ public class CoursesFragment extends Fragment {
 
     /* Helper Functions */
 
-//    private void addRandomEvents() {
-//        ArrayList<String> lessons = new ArrayList<>();
-//        lessons.add("Lesson1");
-//        lessons.add("Lesson2");
-//        lessons.add("Lesson3");
-//        ArrayList<String> questions = new ArrayList<>();
-//        questions.add("Question1");
-//        questions.add("Question2");
-//        questions.add("Question3");
-//        ArrayList<String> next = new ArrayList<>();
-//        next.add("Choice1");
-//        next.add("Choice2");
-//        next.add("The End!");
-//        eventsList.add(
-//                new Package(
-//                        "Math",
-//                        "Algebra",
-//                        "Solving Linear Equations",
-//                        lessons,
-//                        questions,
-//                        next
-//                )
-//        );
-//        Log.d("CoursesFragment", "Package added!");
-//    }
-
     private void addFetchedEventToArrayList(DocumentSnapshot fetchedPackage) {
 
         // Store info of each fetched event in temp variable
@@ -138,6 +111,8 @@ public class CoursesFragment extends Fragment {
         String pkgModule = fetchedPackage.getString(AppUtils.KEY_MODULE);
         ArrayList<String> lessons = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_LESSONS);
         ArrayList<String> questions = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_QUESTIONS);
+        ArrayList<String> answers = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_ANSWERS);
+        ArrayList<String> correct_answers = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_CORRECT_ANSWERS);
         ArrayList<String> next = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_NEXT);
 
         // Create an Package object with the retrieved event info (in temp variables)
@@ -149,6 +124,8 @@ public class CoursesFragment extends Fragment {
                         pkgModule,
                         lessons,
                         questions,
+                        answers,
+                        correct_answers,
                         next
                 )
         );
@@ -162,7 +139,7 @@ public class CoursesFragment extends Fragment {
 //        Collections.sort(eventsList, new Package.EventStartDateComparator());
 
         // Set up recycler view
-        eventsAdapter = new PackageAdapter(eventsList, new PackageAdapter.OnItemClickListener() {
+        eventsAdapter = new CoursesAdapter(eventsList, new CoursesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Package pkg) {
                 // Bind a click listener to the reyclerview item
@@ -174,6 +151,8 @@ public class CoursesFragment extends Fragment {
                 intent.putExtra("pkgModule", pkg.getModule());
                 intent.putExtra("pkgLessons", pkg.getLessons());
                 intent.putExtra("pkgQuestions", pkg.getQuestions());
+                intent.putExtra("pkgAnswers", pkg.getAnswers());
+                intent.putExtra("pkgCorrectAnswers", pkg.getCorrect_answers());
                 intent.putExtra("pkgNext", pkg.getNext());
                 startActivity(intent);
             }
