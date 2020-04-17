@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String messageText = messageArea.getText().toString();
-
+                scrollView.scrollTo(0, scrollView.getBottom());
                 if(!messageText.equals("")){
                     addMessageBox(messageText, 2);
                     messageArea.setText("");
@@ -120,5 +120,6 @@ public class ChatActivity extends AppCompatActivity {
         textView.setLayoutParams(lp2);
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
+        scrollView.scrollTo(0, scrollView.getBottom());
     }
 }
