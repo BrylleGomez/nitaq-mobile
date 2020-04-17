@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import androidx.fragment.app.Fragment;
 
 
-public class ProfileFragment extends Fragment {
+public class BrowseFragment extends Fragment {
 
     /* Variables */
 
@@ -18,7 +18,7 @@ public class ProfileFragment extends Fragment {
 
     /* Initializer Functions */
 
-    public ProfileFragment() {
+    public BrowseFragment() {
         // Required empty public constructor
     }
 

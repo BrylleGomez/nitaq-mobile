@@ -25,22 +25,18 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.firestore.QuerySnapshot;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class EventsFragment extends Fragment {
+public class CoursesFragment extends Fragment {
 
     /* Variables */
 
-    private ArrayList<Event> eventsList = new ArrayList<>();                                                // list to store event objects retrieved from Firebase
+    private ArrayList<Package> eventsList = new ArrayList<>();                                                // list to store event objects retrieved from Firebase
     private RecyclerView eventsView;
-    private EventAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
+    private PackageAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
 //    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();                         // retrieve current Firebase user
 //    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
 //    private CollectionReference firestoreEventList = firebaseFirestore.collection("events");    // retrieve reference to "events" collection// recycler view to display objects
@@ -48,7 +44,7 @@ public class EventsFragment extends Fragment {
 
     /* Initializer Functions */
 
-    public EventsFragment() {
+    public CoursesFragment() {
         // Required empty public constructor
     }
 
@@ -56,7 +52,7 @@ public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_downloaded, container, false);
+        return inflater.inflate(R.layout.fragment_courses, container, false);
     }
 
     @Override
@@ -67,8 +63,11 @@ public class EventsFragment extends Fragment {
         eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
 
         // Fetches all event database entries and stores them in an array list of event objects
-        addRandomEvents();
+        for (int i = 0; i < 10; i++) {
+            addRandomEvents();
+        }
         loadRecyclerView();
+
 //        firestoreEventList.get()                                                // Fetch all event entries from database
 //            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
 //                @Override
@@ -87,7 +86,7 @@ public class EventsFragment extends Fragment {
 //            .addOnFailureListener(new OnFailureListener() {
 //                @Override
 //                public void onFailure(@NonNull Exception e) {
-//                    Log.d("EventsFragment", "Error fetching events: ", e);
+//                    Log.d("CoursesFragment", "Error fetching events: ", e);
 //                }
 //            });
 
@@ -107,20 +106,29 @@ public class EventsFragment extends Fragment {
     /* Helper Functions */
 
     private void addRandomEvents() {
+        ArrayList<String> lessons = new ArrayList<>();
+        lessons.add("Lesson1");
+        lessons.add("Lesson2");
+        lessons.add("Lesson3");
+        ArrayList<String> questions = new ArrayList<>();
+        questions.add("Question1");
+        questions.add("Question2");
+        questions.add("Question3");
+        ArrayList<String> next = new ArrayList<>();
+        next.add("Choice1");
+        next.add("Choice2");
+        next.add("The End!");
         eventsList.add(
-                new Event(
-                        1,
-                        "Event Name",
-                        0.0,
-                        0.0,
-                        "Nowhere",
-                        "Apr. 17, 2020",
-                        "Apr. 17, 2020",
-                        "09:00",
-                        "11:00"
+                new Package(
+                        "Math",
+                        "Algebra",
+                        "Solving Linear Equations",
+                        lessons,
+                        questions,
+                        next
                 )
         );
-        Log.d("EventsFragment", "Event added!");
+        Log.d("CoursesFragment", "Package added!");
     }
 
 //    private void addFetchedEventToArrayList(DocumentSnapshot fetchedEvent) {
@@ -141,10 +149,10 @@ public class EventsFragment extends Fragment {
 //        String startTime = fetchedEvent.getString(AppUtils.KEY_START_TIME);
 //        String endTime = fetchedEvent.getString(AppUtils.KEY_END_TIME);
 //
-//        // Create an Event object with the retrieved event info (in temp variables)
-//        // Add created Event object to the container
+//        // Create an Package object with the retrieved event info (in temp variables)
+//        // Add created Package object to the container
 //        eventsList.add(
-//                new Event(
+//                new Package(
 //                        eventId,
 //                        eventName,
 //                        eventLatitude,
@@ -156,30 +164,29 @@ public class EventsFragment extends Fragment {
 //                        endTime
 //                )
 //        );
-//        Log.d("EventsFragment", fetchedEvent.toString() + " added!");
+//        Log.d("CoursesFragment", fetchedEvent.toString() + " added!");
 //
 //    }
 //
     private void loadRecyclerView() {
 
-        // sort events array list according to start date
-        Collections.sort(eventsList, new Event.EventStartDateComparator());
+//        // sort events array list according to start date
+//        Collections.sort(eventsList, new Package.EventStartDateComparator());
 
         // Set up recycler view
-        eventsAdapter = new EventAdapter(eventsList, new EventAdapter.OnItemClickListener() {
+        eventsAdapter = new PackageAdapter(eventsList, new PackageAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Event event) {
+            public void onItemClick(Package pkg) {
                 // Bind a click listener to the reyclerview item
 
                 // create intent, pass event object members as extras, and start activity
                 Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("eventID", event.getID());
-                intent.putExtra("eventName", event.getName());
-                intent.putExtra("eventDates", event.getDates());
-                intent.putExtra("eventTimings", event.getTimes());
-                intent.putExtra("eventLocation", event.getLocation());
-                intent.putExtra("eventLatitude", event.getLatitude());
-                intent.putExtra("eventLongitude", event.getLongitude());
+                intent.putExtra("pkgSubject", pkg.getSubject());
+                intent.putExtra("pkgTopic", pkg.getTopic());
+                intent.putExtra("pkgModule", pkg.getModule());
+                intent.putExtra("pkgLessons", pkg.getLessons());
+                intent.putExtra("pkgQuestions", pkg.getQuestions());
+                intent.putExtra("pkgNext", pkg.getNext());
                 startActivity(intent);
             }
         });
