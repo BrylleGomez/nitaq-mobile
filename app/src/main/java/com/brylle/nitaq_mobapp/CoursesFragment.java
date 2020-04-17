@@ -64,17 +64,6 @@ public class CoursesFragment extends Fragment {
         eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
         prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
 
-        // test - clear /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-
-//        // Fetches all event database entries and stores them in an array list of event objects
-//        for (int i = 0; i < 10; i++) {
-//            addRandomEvents();
-//        }
-//        loadRecyclerView();
-
         firestorePackageList.get()                                                // Fetch all event entries from database
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
@@ -85,7 +74,7 @@ public class CoursesFragment extends Fragment {
                         // check if package is part of downloaded
                         String tempModule = fetchedPackage.getString(AppUtils.KEY_MODULE);
                         String downloaded = prefs.getString(tempModule, "0");
-                        if (downloaded.equals("0")) {
+                        if (!downloaded.equals("0")) {
                             addFetchedEventToArrayList(fetchedPackage);
                         }
 
