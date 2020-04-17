@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.brylle.aus_cs_app_android_j.AppUtils;
-//import com.google.android.gms.tasks.OnFailureListener;
-//import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 //import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseUser;
-//import com.google.firebase.firestore.CollectionReference;
-//import com.google.firebase.firestore.DocumentSnapshot;
-//import com.google.firebase.firestore.FirebaseFirestore;
-//import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,9 +38,8 @@ public class CoursesFragment extends Fragment {
     private RecyclerView eventsView;
     private PackageAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
 //    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();                         // retrieve current Firebase user
-//    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
-//    private CollectionReference firestoreEventList = firebaseFirestore.collection("events");    // retrieve reference to "events" collection// recycler view to display objects
-
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
+    private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
 
     /* Initializer Functions */
 
@@ -62,33 +61,33 @@ public class CoursesFragment extends Fragment {
         // Initialize Objects
         eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
 
-        // Fetches all event database entries and stores them in an array list of event objects
-        for (int i = 0; i < 10; i++) {
-            addRandomEvents();
-        }
-        loadRecyclerView();
+//        // Fetches all event database entries and stores them in an array list of event objects
+//        for (int i = 0; i < 10; i++) {
+//            addRandomEvents();
+//        }
+//        loadRecyclerView();
 
-//        firestoreEventList.get()                                                // Fetch all event entries from database
-//            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                @Override
-//                public void onSuccess(QuerySnapshot fetchedEvents) {
-//
-//                    for (DocumentSnapshot fetchedEvent : fetchedEvents) {       // Iterate through all fetched events
-//                        addFetchedEventToArrayList(fetchedEvent);
-//                    }
-//
-//                    // load recycler view from adapter
-//                    loadRecyclerView();
-//
-//                }
-//
-//            })
-//            .addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Log.d("CoursesFragment", "Error fetching events: ", e);
-//                }
-//            });
+        firestorePackageList.get()                                                // Fetch all event entries from database
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot fetchedPackages) {
+
+                    for (DocumentSnapshot fetchedPackage : fetchedPackages) {       // Iterate through all fetched events
+                        addFetchedEventToArrayList(fetchedPackage);
+                    }
+
+                    // load recycler view from adapter
+                    loadRecyclerView();
+
+                }
+
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("CoursesFragment", "Error fetching packages: ", e);
+                }
+            });
 
     }
 
@@ -105,69 +104,58 @@ public class CoursesFragment extends Fragment {
 
     /* Helper Functions */
 
-    private void addRandomEvents() {
-        ArrayList<String> lessons = new ArrayList<>();
-        lessons.add("Lesson1");
-        lessons.add("Lesson2");
-        lessons.add("Lesson3");
-        ArrayList<String> questions = new ArrayList<>();
-        questions.add("Question1");
-        questions.add("Question2");
-        questions.add("Question3");
-        ArrayList<String> next = new ArrayList<>();
-        next.add("Choice1");
-        next.add("Choice2");
-        next.add("The End!");
+//    private void addRandomEvents() {
+//        ArrayList<String> lessons = new ArrayList<>();
+//        lessons.add("Lesson1");
+//        lessons.add("Lesson2");
+//        lessons.add("Lesson3");
+//        ArrayList<String> questions = new ArrayList<>();
+//        questions.add("Question1");
+//        questions.add("Question2");
+//        questions.add("Question3");
+//        ArrayList<String> next = new ArrayList<>();
+//        next.add("Choice1");
+//        next.add("Choice2");
+//        next.add("The End!");
+//        eventsList.add(
+//                new Package(
+//                        "Math",
+//                        "Algebra",
+//                        "Solving Linear Equations",
+//                        lessons,
+//                        questions,
+//                        next
+//                )
+//        );
+//        Log.d("CoursesFragment", "Package added!");
+//    }
+
+    private void addFetchedEventToArrayList(DocumentSnapshot fetchedPackage) {
+
+        // Store info of each fetched event in temp variable
+        String pkgSubject = fetchedPackage.getString(AppUtils.KEY_SUBJECT);
+        String pkgTopic = fetchedPackage.getString(AppUtils.KEY_TOPIC);
+        String pkgModule = fetchedPackage.getString(AppUtils.KEY_MODULE);
+        ArrayList<String> lessons = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_LESSONS);
+        ArrayList<String> questions = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_QUESTIONS);
+        ArrayList<String> next = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_NEXT);
+
+        // Create an Package object with the retrieved event info (in temp variables)
+        // Add created Package object to the container
         eventsList.add(
                 new Package(
-                        "Math",
-                        "Algebra",
-                        "Solving Linear Equations",
+                        pkgSubject,
+                        pkgTopic,
+                        pkgModule,
                         lessons,
                         questions,
                         next
                 )
         );
-        Log.d("CoursesFragment", "Package added!");
+        Log.d("CoursesFragment ", fetchedPackage.toString() + " added!");
+
     }
 
-//    private void addFetchedEventToArrayList(DocumentSnapshot fetchedEvent) {
-//        // Store details of event fetched from Firebase onto an event object
-//        // Add this event object to the events array list
-//
-//        boolean is_past = fetchedEvent.getBoolean(AppUtils.KEY_IS_PAST);
-//        if (is_past) return;
-//
-//        // Store info of each fetched event in temp variable
-//        @NonNull int eventId = fetchedEvent.getLong(AppUtils.KEY_EVENT_ID).intValue();
-//        String eventName = fetchedEvent.getString(AppUtils.KEY_EVENT_NAME);
-//        double eventLatitude = fetchedEvent.getGeoPoint(AppUtils.KEY_EVENT_COORDS).getLatitude();
-//        double eventLongitude = fetchedEvent.getGeoPoint(AppUtils.KEY_EVENT_COORDS).getLongitude();
-//        String eventLocation = fetchedEvent.getString(AppUtils.KEY_EVENT_LOCATION);
-//        String startDate = fetchedEvent.getString(AppUtils.KEY_START_DATE);
-//        String endDate = fetchedEvent.getString(AppUtils.KEY_END_DATE);
-//        String startTime = fetchedEvent.getString(AppUtils.KEY_START_TIME);
-//        String endTime = fetchedEvent.getString(AppUtils.KEY_END_TIME);
-//
-//        // Create an Package object with the retrieved event info (in temp variables)
-//        // Add created Package object to the container
-//        eventsList.add(
-//                new Package(
-//                        eventId,
-//                        eventName,
-//                        eventLatitude,
-//                        eventLongitude,
-//                        eventLocation,
-//                        startDate,
-//                        endDate,
-//                        startTime,
-//                        endTime
-//                )
-//        );
-//        Log.d("CoursesFragment", fetchedEvent.toString() + " added!");
-//
-//    }
-//
     private void loadRecyclerView() {
 
 //        // sort events array list according to start date
