@@ -8,6 +8,7 @@
     android:padding="8dp"
     android:layout_margin="8dp"
     android:background="@drawable/shapes"
+    android:elevation="2dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView

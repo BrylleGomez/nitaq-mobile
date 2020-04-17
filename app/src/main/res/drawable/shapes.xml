@@ -1,20 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<!-- res/drawable/myrect.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-        android:shape="rectangle">
-    <!--used for border of EventViewHolder-->
-    <!--stroke width and color-->
-    <stroke
-        android:width="2dp"
-        android:color="@color/colorPrimaryDark"/>
-    <!-- corner radius-->
-    <corners
-        android:radius="0dp"/>
-    <!--paddings-->
-    <padding
-        android:left="15dp"
-        android:top="10dp"
-        android:right="15dp"
-        android:bottom="10dp"/>
-
+    android:shape="rectangle">
+    <solid android:color="@android:color/white" />
+    <corners android:radius="5dp" />
 </shape>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:shape="rectangle">-->
+<!--    &lt;!&ndash;used for border of EventViewHolder&ndash;&gt;-->
+<!--    &lt;!&ndash;stroke width and color&ndash;&gt;-->
+<!--    -->
+<!--    &lt;!&ndash; corner radius&ndash;&gt;-->
+<!--    <corners-->
+<!--        android:radius="0dp"/>-->
+<!--    &lt;!&ndash;paddings&ndash;&gt;-->
+<!--    <padding-->
+<!--        android:left="15dp"-->
+<!--        android:top="10dp"-->
+<!--        android:right="15dp"-->
+<!--        android:bottom="10dp"/>-->
+
+<!--</shape>-->
