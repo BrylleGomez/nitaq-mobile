@@ -25,6 +25,11 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.firestore.QuerySnapshot;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
@@ -34,7 +39,11 @@ public class EventsFragment extends Fragment {
     /* Variables */
 
     private ArrayList<Event> eventsList = new ArrayList<>();                                                // list to store event objects retrieved from Firebase
-    private RecyclerView eventsView;                                                                        // recycler view to display objects
+    private RecyclerView eventsView;
+    private EventAdapter eventsAdapter;                                                                     // adapter to bind event objects in array list to recycler view
+//    private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();                         // retrieve current Firebase user
+//    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
+//    private CollectionReference firestoreEventList = firebaseFirestore.collection("events");    // retrieve reference to "events" collection// recycler view to display objects
 
 
     /* Initializer Functions */
@@ -55,9 +64,11 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize Objects
-//        eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
-//
-//        // Fetches all event database entries and stores them in an array list of event objects
+        eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
+
+        // Fetches all event database entries and stores them in an array list of event objects
+        addRandomEvents();
+        loadRecyclerView();
 //        firestoreEventList.get()                                                // Fetch all event entries from database
 //            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
 //                @Override
@@ -94,6 +105,23 @@ public class EventsFragment extends Fragment {
     }
 
     /* Helper Functions */
+
+    private void addRandomEvents() {
+        eventsList.add(
+                new Event(
+                        1,
+                        "Event Name",
+                        0.0,
+                        0.0,
+                        "Nowhere",
+                        "Apr. 17, 2020",
+                        "Apr. 17, 2020",
+                        "09:00",
+                        "11:00"
+                )
+        );
+        Log.d("EventsFragment", "Event added!");
+    }
 
 //    private void addFetchedEventToArrayList(DocumentSnapshot fetchedEvent) {
 //        // Store details of event fetched from Firebase onto an event object
@@ -132,32 +160,32 @@ public class EventsFragment extends Fragment {
 //
 //    }
 //
-//    private void loadRecyclerView() {
-//
-//        // sort events array list according to start date
-//        Collections.sort(eventsList, new Event.EventStartDateComparator());
-//
-//        // Set up recycler view
-//        eventsAdapter = new EventAdapter(eventsList, new EventAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(Event event) {
-//                // Bind a click listener to the reyclerview item
-//
-//                // create intent, pass event object members as extras, and start activity
-//                Intent intent = new Intent(getContext(), EventDetailsActivity.class);
-//                intent.putExtra("eventID", event.getID());
-//                intent.putExtra("eventName", event.getName());
-//                intent.putExtra("eventDates", event.getDates());
-//                intent.putExtra("eventTimings", event.getTimes());
-//                intent.putExtra("eventLocation", event.getLocation());
-//                intent.putExtra("eventLatitude", event.getLatitude());
-//                intent.putExtra("eventLongitude", event.getLongitude());
-//                startActivity(intent);
-//            }
-//        });
-//        eventsView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        eventsView.setAdapter(eventsAdapter);
-//
-//    }
+    private void loadRecyclerView() {
+
+        // sort events array list according to start date
+        Collections.sort(eventsList, new Event.EventStartDateComparator());
+
+        // Set up recycler view
+        eventsAdapter = new EventAdapter(eventsList, new EventAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Event event) {
+                // Bind a click listener to the reyclerview item
+
+                // create intent, pass event object members as extras, and start activity
+                Intent intent = new Intent(getContext(), TestActivity.class);
+                intent.putExtra("eventID", event.getID());
+                intent.putExtra("eventName", event.getName());
+                intent.putExtra("eventDates", event.getDates());
+                intent.putExtra("eventTimings", event.getTimes());
+                intent.putExtra("eventLocation", event.getLocation());
+                intent.putExtra("eventLatitude", event.getLatitude());
+                intent.putExtra("eventLongitude", event.getLongitude());
+                startActivity(intent);
+            }
+        });
+        eventsView.setLayoutManager(new LinearLayoutManager(getContext()));
+        eventsView.setAdapter(eventsAdapter);
+
+    }
 
 }
