@@ -29,7 +29,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
     @Override
     public BrowseAdapter.EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_courses_package_viewholder,parent,false);
+                .inflate(R.layout.fragment_browse_courses_package_viewholder,parent,false);
 
         return new EventViewHolder(itemView);
     }
@@ -49,9 +49,9 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
         TextView subjectView, moduleView, topicView;
         public EventViewHolder(View itemView) {
             super(itemView);
-            subjectView = itemView.findViewById(R.id.fragment_courses_viewholder_subject);
-            moduleView = itemView.findViewById(R.id.fragment_courses_viewholder_module);
-            topicView = itemView.findViewById(R.id.fragment_courses_viewholder_topic);
+            subjectView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_subject);
+            moduleView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_module);
+            topicView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_topic);
         }
 
         public void bind(final Package pkg, final OnItemClickListener clickListener) {

@@ -58,7 +58,7 @@ public class CoursesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize Objects
-        eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
+        eventsView = Objects.requireNonNull(getView()).findViewById(R.id.courses_recyclerview);
 
 //        // Fetches all event database entries and stores them in an array list of event objects
 //        for (int i = 0; i < 10; i++) {
