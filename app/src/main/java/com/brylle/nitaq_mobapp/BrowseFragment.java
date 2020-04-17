@@ -1,6 +1,7 @@
 package com.brylle.nitaq_mobapp;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -117,6 +119,10 @@ public class BrowseFragment extends Fragment {
         ArrayList<String> correct_answers = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_CORRECT_ANSWERS);
         ArrayList<String> next = (ArrayList<String>) fetchedPackage.get(AppUtils.KEY_NEXT);
 
+        // determine downloaded status
+        String temp = prefs.getString(pkgModule, "0");
+        boolean downloaded = !temp.equals("0");
+
         // Create an Package object with the retrieved event info (in temp variables)
         // Add created Package object to the container
         browseList.add(
@@ -128,7 +134,8 @@ public class BrowseFragment extends Fragment {
                         questions,
                         answers,
                         correct_answers,
-                        next
+                        next,
+                        downloaded
                 )
         );
         Log.d("CoursesFragment ", fetchedPackage.toString() + " added!");
@@ -154,8 +161,18 @@ public class BrowseFragment extends Fragment {
                     editor.putString(pkg.getModule(), pkg.getModule());
                     Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
                     editor.apply();
+
+                    // refresh -- very conky pls replace
+                    if (getActivity().getSupportFragmentManager() != null) {
+                        Toast.makeText(getContext(), "Yay!", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(BrowseFragment.this.getId(), new BrowseFragment()).commit();
+                    } else {
+                        Toast.makeText(getContext(), "Null!", Toast.LENGTH_SHORT).show();
+                    }
+
+
                 } else {
-                    Toast.makeText(getContext(), "Already saved...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Already downloaded...", Toast.LENGTH_SHORT).show();
                 }
 
             }

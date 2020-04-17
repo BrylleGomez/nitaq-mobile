@@ -132,7 +132,8 @@ public class CoursesFragment extends Fragment {
                         questions,
                         answers,
                         correct_answers,
-                        next
+                        next,
+                        true
                 )
         );
         Log.d("CoursesFragment ", fetchedPackage.toString() + " added!");

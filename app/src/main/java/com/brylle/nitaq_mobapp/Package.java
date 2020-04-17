@@ -20,6 +20,7 @@ public class Package {
     private ArrayList<String> answers;
     private ArrayList<String> correct_answers;
     private ArrayList<String> next;
+    private boolean downloaded;
 
     // constructor
     public Package(
@@ -30,7 +31,8 @@ public class Package {
             ArrayList<String> questions,
             ArrayList<String> answers,
             ArrayList<String> correct_answers,
-            ArrayList<String> next) {
+            ArrayList<String> next,
+            boolean downloaded) {
         this.subject = subject;
         this.topic = topic;
         this.module = module;
@@ -39,6 +41,7 @@ public class Package {
         this.answers = answers;
         this.correct_answers = correct_answers;
         this.next = next;
+        this.downloaded = downloaded;
     }
 
     // prints a log output of the event object
@@ -77,5 +80,10 @@ public class Package {
     public ArrayList<String> getNext() {
         return next;
     }
+
+    public boolean getDownloaded() {
+        return downloaded;
+    }
+
 }
 
