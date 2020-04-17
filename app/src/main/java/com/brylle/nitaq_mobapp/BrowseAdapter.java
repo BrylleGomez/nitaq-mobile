@@ -1,12 +1,9 @@
 package com.brylle.nitaq_mobapp;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.view.View;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,6 +57,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
             moduleView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_module);
             topicView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_topic);
             button = itemView.findViewById(R.id.floatingActionButton2);
+
         }
 
         public void bind(final Package pkg, final OnItemClickListener clickListener) {
@@ -74,8 +72,10 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
             });
             if (pkg.getDownloaded()) {
                 button.setImageResource(R.drawable.check_white_24);
+                button.setBackgroundColor(0x242254); // doesn't work
             } else {
                 button.setImageResource(R.drawable.darrow);
+                button.setBackgroundColor(0x44336); // doesn't work
             }
 
         }

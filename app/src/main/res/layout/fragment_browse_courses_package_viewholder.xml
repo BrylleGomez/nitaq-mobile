@@ -17,31 +17,22 @@ android:padding="8dp">
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/fragment_browse_courses_viewholder_subject"
+        android:id="@+id/fragment_browse_courses_viewholder_module"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:paddingLeft="8dp"
+        android:paddingTop="8dp"
         android:paddingRight="8dp"
-        android:paddingBottom="8dp"
 
-        android:text="Subject"
+        android:paddingBottom="8dp"
+        android:text="Module"
         android:textColor="@color/colorPrimaryText"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/fragment_browse_courses_viewholder_module"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="Module"
-        android:textColor="@color/colorPrimaryText" />
 
     <TextView
         android:id="@+id/fragment_browse_courses_viewholder_topic"
@@ -52,6 +43,16 @@ android:padding="8dp">
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:text="Topic"
+        android:textColor="@color/colorPrimaryText" />
+
+    <TextView
+        android:id="@+id/fragment_browse_courses_viewholder_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="Subject"
         android:textColor="@color/colorPrimaryText" />
 
 </LinearLayout>
