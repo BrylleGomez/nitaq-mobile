@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/profileBtn"
+        android:id="@+id/coursesBtn"
         android:icon="@drawable/download_24"
         android:title="My Courses"/>
     <item
@@ -10,7 +10,7 @@
         android:icon="@drawable/bot24"
         android:title=""/>
     <item
-        android:id="@+id/eventlistBtn"
+        android:id="@+id/browseBtn"
         android:icon="@drawable/ic_list_24dp"
         android:title="Browse"/>
 </menu>

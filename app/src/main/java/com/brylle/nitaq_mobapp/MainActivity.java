@@ -9,19 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -31,14 +27,15 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    Fragment pfragment = new CoursesFragment();
-    Fragment efragment = new BrowseFragment();
+    Fragment cfragment = new CoursesFragment();
+    Fragment bfragment = new BrowseFragment();
+
     String data;
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
     private SharedPreferences prefs;    // TEST /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Fragment active = efragment;
+    Fragment active = cfragment;
 
     /* Initializer functions */
 
@@ -55,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         data = intent.getStringExtra("qrData");      // will be null if this activity was NOT started by QRScanActivity
         Bundle bundle = new Bundle();                             // create Bundle to pass to QRFragment info from QRScanActivity (in the case this activity was started by QRScanActivity)
 
-        fragmentManager.beginTransaction().add(R.id.frameLayout, pfragment, "2").hide(pfragment).commit();
-        fragmentManager.beginTransaction().add(R.id.frameLayout, efragment, "1").commit();
-        active = efragment;
+        fragmentManager.beginTransaction().add(R.id.frameLayout, bfragment, "2").hide(bfragment).commit();
+        fragmentManager.beginTransaction().add(R.id.frameLayout, cfragment, "1").commit();
+        active = cfragment;
 
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -116,14 +113,14 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             // Fragment selectedFragment = null;
             switch (menuItem.getItemId()) {
-                case R.id.eventlistBtn:
-                    fragmentManager.beginTransaction().hide(active).show(efragment).commit();
-                    active = efragment;
+                case R.id.coursesBtn:
+                    fragmentManager.beginTransaction().hide(active).show(cfragment).commit();
+                    active = cfragment;
                     return true;
 
-                case R.id.profileBtn:
-                    fragmentManager.beginTransaction().hide(active).show(pfragment).commit();
-                    active = pfragment;
+                case R.id.browseBtn:
+                    fragmentManager.beginTransaction().hide(active).show(bfragment).commit();
+                    active = bfragment;
                     return true;
             }
             return false;

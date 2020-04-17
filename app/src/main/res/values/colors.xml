@@ -10,4 +10,8 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
 
+    <color name="lightBlue">#A0C7E8</color>
+    <color name="navyBlue">#242254</color>
+    <color name="bluishGray">#9EABBC</color>
+
 </resources>

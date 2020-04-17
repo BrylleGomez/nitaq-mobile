@@ -61,8 +61,9 @@ public class CoursesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize Objects
-        eventsView = Objects.requireNonNull(getView()).findViewById(R.id.events_recyclerview);
+        eventsView = Objects.requireNonNull(getView()).findViewById(R.id.courses_recyclerview);
         prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
+
 
         firestorePackageList.get()                                                // Fetch all event entries from database
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
