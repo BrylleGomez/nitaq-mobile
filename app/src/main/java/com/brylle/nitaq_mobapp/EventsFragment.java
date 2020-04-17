@@ -172,7 +172,7 @@ public class EventsFragment extends Fragment {
                 // Bind a click listener to the reyclerview item
 
                 // create intent, pass event object members as extras, and start activity
-                Intent intent = new Intent(getContext(), TestActivity.class);
+                Intent intent = new Intent(getContext(), ChatActivity.class);
                 intent.putExtra("eventID", event.getID());
                 intent.putExtra("eventName", event.getName());
                 intent.putExtra("eventDates", event.getDates());
