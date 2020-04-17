@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/profileBtn"
+        android:icon="@drawable/download_24"
+        android:title="My Courses"/>
+
+    <item
+        android:id="@+id/eventlistBtn"
+        android:icon="@drawable/ic_list_24dp"
+        android:title="Browse"/>
+</menu>
