@@ -16,6 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hypelabs.hype.Hype;
+import com.hypelabs.hype.Instance;
+import com.hypelabs.hype.Message;
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +31,8 @@ public class ChatActivity extends AppCompatActivity {
     EditText messageArea;
     ScrollView scrollView;
 //    Firebase reference1, reference2;
+
+    public static String INTENT_EXTRA_STORE = "com.hypelabs.store";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,4 +120,15 @@ public class ChatActivity extends AppCompatActivity {
         scrollView.fullScroll(View.FOCUS_DOWN);
         scrollView.scrollTo(0, scrollView.getBottom());
     }
+
+    protected Message sendMessage(String text, Instance instance, boolean acknowledge) throws UnsupportedEncodingException {
+
+        // When sending content there must be some sort of protocol that both parties
+        // understand. In this case, we simply send the text encoded in UTF-8. The data
+        // must be decoded when received, using the same encoding.
+        byte[] data = text.getBytes("UTF-8");
+
+        return Hype.send(data, instance, acknowledge);
+    }
+
 }

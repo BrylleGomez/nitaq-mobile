@@ -122,6 +122,13 @@ public class MainActivity extends AppCompatActivity {
                     fragmentManager.beginTransaction().hide(active).show(bfragment).commit();
                     active = bfragment;
                     return true;
+
+                case R.id.contactsBtn:
+                    // create intent, pass event object members as extras, and start activity
+                    Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+                    startActivity(intent);
+                    return true;
+
             }
             return false;
         }
