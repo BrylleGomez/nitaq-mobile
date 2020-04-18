@@ -46,7 +46,8 @@ import java.util.Map;
 public class ChatApplication extends BaseApplication implements StateObserver, NetworkObserver, MessageObserver, BaseApplication.LifecycleDelegate {
 
     public static String announcement = android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL;
-    private static final String TAG = ChatApplication.class.getName();
+//    private static final String TAG = ChatApplication.class.getName();
+    private static final String TAG = "DEBUG";
 
     // The stores object keeps track of message storage associated with each instance (peer)
     private Map<String, Store> stores;
@@ -59,6 +60,7 @@ public class ChatApplication extends BaseApplication implements StateObserver, N
 
     @Override
     public void onApplicationStart(Application app) {
+        Log.i(TAG, "onApplicationStart");
         configureHype();
     }
 
@@ -84,7 +86,7 @@ public class ChatApplication extends BaseApplication implements StateObserver, N
 
         // Generate an app identifier in the HypeLabs dashboard (https://hypelabs.io/apps/),
         // by creating a new app. Copy the given identifier here.
-        Hype.setAppIdentifier("b4fcdedc");
+        Hype.setAppIdentifier("d183569a");
 
         // Set Hype announcement
         try {
@@ -100,13 +102,14 @@ public class ChatApplication extends BaseApplication implements StateObserver, N
         mainActivity.requestPermissions(mainActivity);
 
         isConfigured = true;
+        Log.i(TAG, "Contact activity: " + mainActivity);
     }
 
     @Override
     public String onHypeRequestAccessToken(int i) {
 
         // Access the app settings (https://hypelabs.io/apps/) to find an access token to use here.
-        return "51582d0923753c19";
+        return "98d32539e0a97050";
     }
 
 
@@ -209,6 +212,7 @@ public class ChatApplication extends BaseApplication implements StateObserver, N
     public void onHypeInstanceResolved(Instance instance) {
 
         Log.i(TAG, String.format("Hype resolved instance: %s", instance.getStringIdentifier()));
+        Log.d("DEBUG", "Test2");
 
         // Add found instance to resolved instances
         addToResolvedInstancesMap(instance);
@@ -230,6 +234,7 @@ public class ChatApplication extends BaseApplication implements StateObserver, N
         ContactActivity contactActivity = ContactActivity.getDefaultInstance();
 
         if (contactActivity != null) {
+            Log.d("DEBUG", "Test");
             contactActivity.notifyContactsChanged();
         }
     }
