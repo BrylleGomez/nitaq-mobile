@@ -3,6 +3,14 @@ package com.brylle.nitaq_mobapp;
 import android.app.Application;
 import android.util.Log;
 
+import com.hypelabs.hype.Error;
+import com.hypelabs.hype.Hype;
+import com.hypelabs.hype.Instance;
+import com.hypelabs.hype.Message;
+import com.hypelabs.hype.MessageInfo;
+import com.hypelabs.hype.MessageObserver;
+import com.hypelabs.hype.NetworkObserver;
+import com.hypelabs.hype.StateObserver;
 
 
 public class HypeApp extends Application implements StateObserver, NetworkObserver, MessageObserver {
@@ -49,12 +57,67 @@ public class HypeApp extends Application implements StateObserver, NetworkObserv
     }
 
     @Override
+    public void onHypeStop(Error error) {
+
+    }
+
+    @Override
     public void onHypeFailedStarting(Error error) {
         Log.i(TAG, String.format("Hype failed starting [%s]", error.toString()));
     }
 
     @Override
+    public void onHypeReady() {
+
+    }
+
+    @Override
+    public void onHypeStateChange() {
+
+    }
+
+    @Override
     public String onHypeRequestAccessToken(int userIdentifier) {
         return "a518f3fffa21e803";
+    }
+
+    @Override
+    public void onHypeMessageReceived(Message message, Instance instance) {
+
+    }
+
+    @Override
+    public void onHypeMessageFailedSending(MessageInfo messageInfo, Instance instance, Error error) {
+
+    }
+
+    @Override
+    public void onHypeMessageSent(MessageInfo messageInfo, Instance instance, float v, boolean b) {
+
+    }
+
+    @Override
+    public void onHypeMessageDelivered(MessageInfo messageInfo, Instance instance, float v, boolean b) {
+
+    }
+
+    @Override
+    public void onHypeInstanceFound(Instance instance) {
+
+    }
+
+    @Override
+    public void onHypeInstanceLost(Instance instance, Error error) {
+
+    }
+
+    @Override
+    public void onHypeInstanceResolved(Instance instance) {
+
+    }
+
+    @Override
+    public void onHypeInstanceFailResolving(Instance instance, Error error) {
+
     }
 }
