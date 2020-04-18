@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':Hype'
 rootProject.name='nitaq_mobapp'
