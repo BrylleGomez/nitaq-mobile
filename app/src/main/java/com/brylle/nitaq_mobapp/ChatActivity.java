@@ -50,7 +50,17 @@ public class ChatActivity extends AppCompatActivity {
 
                     new CountDownTimer(2000, 1000) {
                         public void onFinish() {
-                            addMessageBox("I'm a bot!", 1);
+                            addMessageBox("I'm a bot!", 3);
+
+                            new CountDownTimer(2000, 1000) {
+                                public void onFinish() {
+                                    addMessageBox("I'm another player!", 1);
+                                }
+
+                                public void onTick(long millisUntilFinished) {
+                                    // millisUntilFinished    The amount of time until finished.
+                                }
+                            }.start();
                         }
 
                         public void onTick(long millisUntilFinished) {
@@ -60,42 +70,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        reference1.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Map map = dataSnapshot.getValue(Map.class);
-//                String message = map.get("message").toString();
-//                String userName = map.get("user").toString();
-//
-//                if(userName.equals(UserDetails.username)){
-//                    addMessageBox(message, 1);
-//                }
-//                else{
-//                    addMessageBox(message, 2);
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//
-//            }
-//        });
     }
 
     public void addMessageBox(String message, int type){
@@ -107,15 +81,32 @@ public class ChatActivity extends AppCompatActivity {
         lp2.weight = 7.0f;
         textView.setPadding(25,15,25,25);
         textView.setTextSize(20);
+
+        // type 1 for other players, type2 for your own message, type 3 for GM
         if(type == 1) {
+            TextView textView1 = new TextView(ChatActivity.this);
+            textView1.setText("Other Player");
             lp2.gravity = Gravity.LEFT;
             textView.setBackgroundResource(R.drawable.bubble_in);
             textView.setTextColor(Color.WHITE);
+            textView1.setTextColor(Color.GRAY);
+            textView1.setLayoutParams(lp2);
+            layout.addView(textView1);
         }
-        else{
+        else if (type==2){
             lp2.gravity = Gravity.RIGHT;
             textView.setBackgroundResource(R.drawable.bubble_out);
             textView.setTextColor(Color.WHITE);
+        }
+        else{
+            TextView textView1 = new TextView(ChatActivity.this);
+            textView1.setText("Game Master");
+            lp2.gravity = Gravity.LEFT;
+            textView.setBackgroundResource(R.drawable.bubble_gm);
+            textView.setTextColor(Color.WHITE);
+            textView1.setTextColor(Color.GRAY);
+            textView1.setLayoutParams(lp2);
+            layout.addView(textView1);
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);
