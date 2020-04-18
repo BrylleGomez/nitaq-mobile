@@ -6,7 +6,7 @@
         android:icon="@drawable/download_24"
         android:title="My Courses"/>
     <item
-        android:id="@+id/bott"
+        android:id="@+id/contactsBtn"
         android:icon="@drawable/bot24"
         android:title=""/>
     <item

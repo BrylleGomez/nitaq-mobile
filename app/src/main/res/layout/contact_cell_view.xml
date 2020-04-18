@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/chest"
+            android:id="@+id/avatar"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:layout_weight="0.9">
+
+            <TextView
+                android:id="@+id/hype_announcement"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:text="Announcement: ---"/>
+
+            <TextView
+                android:id="@+id/hype_id"
+                android:layout_width="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:layout_height="wrap_content"/>
+
+        </TableLayout>
+
+    </TableRow>
+
+</TableLayout>

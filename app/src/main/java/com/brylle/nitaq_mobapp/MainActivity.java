@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,6 +38,25 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
     private SharedPreferences prefs;    // TEST /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private static final int REQUEST_ACCESS_COARSE_LOCATION_ID = 0;
+    private static WeakReference<MainActivity> defaultInstance;
+    public static MainActivity getDefaultInstance() {
+        return defaultInstance != null ? defaultInstance.get() : null;
+    }
+    public void requestPermissions(Activity activity) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},
+                    REQUEST_ACCESS_COARSE_LOCATION_ID);
+        }
+        else {
+            ChatApplication chatApplication = (ChatApplication) getApplication();
+            chatApplication.requestHypeToStart();
+        }
+    }
+    private static void setContactActivity(MainActivity instance) {
+
+        defaultInstance = new WeakReference<>(instance);
+    }
 
     Fragment active = cfragment;
 
@@ -43,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // NULL mesh problem
+        setContactActivity(this);
 
         // Initialize navigation toolbar
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigationView);
@@ -121,6 +147,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.browseBtn:
                     fragmentManager.beginTransaction().hide(active).show(bfragment).commit();
                     active = bfragment;
+                    return true;
+                case R.id.contactsBtn:
+                    // start contacts activity with Intent
+
+                    Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+                    startActivity(intent);
+
                     return true;
             }
             return false;
