@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,16 +49,31 @@ public class BrowseFragment extends Fragment {
         // Required empty public constructor
     }
 
+//    protected void onCreate(Bundle savedInstanceState) {
+//
+//    }
+//
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_browse, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_browse, container, false);
+        final SwipeRefreshLayout pullToRefresh = v.findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Refresh(); // your code
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
+        return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         // Initialize Objects
         browseView = Objects.requireNonNull(getView()).findViewById(R.id.browse_recyclerview);
@@ -92,6 +108,40 @@ public class BrowseFragment extends Fragment {
                     }
                 });
 
+    }
+
+    public void Refresh(){
+        //refreshFragment();
+        browseView = Objects.requireNonNull(getView()).findViewById(R.id.browse_recyclerview);
+        prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
+
+//        // Fetches all event database entries and stores them in an array list of event objects
+//        for (int i = 0; i < 10; i++) {
+//            addRandomEvents();
+//        }
+//        loadRecyclerView();
+
+        firestorePackageList.get()                                                // Fetch all event entries from database
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot fetchedPackages) {
+
+                        for (DocumentSnapshot fetchedPackage : fetchedPackages) {       // Iterate through all fetched events
+                            addFetchedEventToArrayList(fetchedPackage);
+                        }
+
+                        // load recycler view from adapter
+                        loadRecyclerView();
+
+                    }
+
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("CoursesFragment", "Error fetching packages: ", e);
+                    }
+                });
     }
 
     @Override
