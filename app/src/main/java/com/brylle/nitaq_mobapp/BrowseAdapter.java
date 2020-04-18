@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewHolder> {
@@ -19,6 +21,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
     // declaring some fields.
     private ArrayList<Package> list;
     private OnItemClickListener clickListener;
+
 
     public BrowseAdapter(ArrayList<Package> arrayList, OnItemClickListener clickListener) {
         this.list = arrayList;
@@ -47,11 +50,14 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
     // Inner ViewHolder Class for Package
     public class EventViewHolder extends RecyclerView.ViewHolder {
         TextView subjectView, moduleView, topicView;
+        FloatingActionButton button;
         public EventViewHolder(View itemView) {
             super(itemView);
             subjectView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_subject);
             moduleView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_module);
             topicView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_topic);
+            button = itemView.findViewById(R.id.floatingActionButton2);
+
         }
 
         public void bind(final Package pkg, final OnItemClickListener clickListener) {
@@ -64,6 +70,14 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
                     clickListener.onItemClick(pkg);
                 }
             });
+            if (pkg.getDownloaded()) {
+                button.setImageResource(R.drawable.check_white_24);
+                button.setBackgroundColor(0x242254); // doesn't work
+            } else {
+                button.setImageResource(R.drawable.darrow);
+                button.setBackgroundColor(0x44336); // doesn't work
+            }
+
         }
 
     }
