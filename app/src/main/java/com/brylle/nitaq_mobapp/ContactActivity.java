@@ -28,8 +28,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,6 +50,7 @@ import com.hypelabs.hype.StateObserver;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +67,18 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
     private Activity activity;
     private boolean isConfigured = false;
     private MyApplication chatApplication;
+    boolean playerFound = false;
+
+    // lesson elements (placeholders only for multiplayer)
+    private String mode;
+    private String subject;
+    private String topic;
+    private String adventure;
+    private ArrayList<String> concepts;
+    private ArrayList<String> questions;
+    private ArrayList<String> answers;
+    private ArrayList<String> correct_answers;
+    private ArrayList<String> titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +91,22 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
         //chatApplication.setActivity(this);
 
         requestPermissions(this);
+
+        // retrieve lesson content from CoursesFragment to pass on to ChatActivity
+        // Retrieve lesson content from intent if multiplayer
+        Bundle extras = getIntent().getExtras();
+        mode = extras.getString("mode");
+        if (mode.equals("multiplayer")) {
+            subject = extras.getString("pkgSubject");
+            topic = extras.getString("pkgTopic");
+            adventure = extras.getString("pkgModule");
+            concepts = (ArrayList<String>) extras.get("pkgLessons");
+            questions = (ArrayList<String>) extras.get("pkgQuestions");
+            answers = (ArrayList<String>) extras.get("pkgAnswers");
+            correct_answers = (ArrayList<String>) extras.get("pkgCorrectAnswers");
+            titles = (ArrayList<String>) extras.get("pkgNext");
+            Log.d("DEBUG","Started ChatActivity in Multiplayer mode, retrieved lesson content!");
+        }
 
         setContentView(R.layout.activity_contact);
         listView = (ListView) findViewById(R.id.contact_view);
@@ -100,6 +131,22 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
                     store.setDelegate(contactActivity);
                     intent.putExtra("store", store.getInstance().getStringIdentifier());
                     intent.putExtra("name", charSequence2); // pass retrieved actual name as string extra to intent
+                    if (mode.equals("multiplayer")) {
+                        intent.putExtra("mode", "multiplayer"); // pass indicator that this is multiplayer!
+                        intent.putExtra("pkgSubject", subject);
+                        intent.putExtra("pkgTopic", topic);
+                        intent.putExtra("pkgModule", adventure);
+                        intent.putExtra("pkgLessons", concepts);
+                        intent.putExtra("pkgQuestions", questions);
+                        intent.putExtra("pkgAnswers", answers);
+                        intent.putExtra("pkgCorrectAnswers", correct_answers);
+                        intent.putExtra("pkgNext", titles);
+                    } else {
+                        intent.putExtra("mode", "chat"); // pass indicator that this is chat!
+                    }
+
+                    // check if multiplayer or chat
+
                     startActivity(intent);
                 }
 
@@ -112,6 +159,22 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
 
         TextView announcementView = findViewById(R.id.hype_announcement);
         announcementView.setText("Device: " + MyApplication.announcement);
+
+        // check for other learners
+        String mode = getIntent().getStringExtra("mode");
+        if (mode != null) {
+
+            if (mode.equals("chat")) {
+                // do nothing
+                Log.d("DEBUG", "Chat mode!");
+            } else if (mode.equals("multiplayer")) {
+                // wait for players
+                Log.d("DEBUG", "Multiplayer mode!");
+            }
+
+        }
+
+
     }
 
     @Override
@@ -155,17 +218,6 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
 // that the device is actively participating on the network.
         Hype.start();
     }
-
-//    @Override
-//    public void onApplicationStart(Application app) {
-//        Log.d("DEBUG","Doing config");
-//        configureHype();
-//    }
-//
-//    @Override
-//    public void onApplicationStop(Application app) {
-//
-//    }
 
     private void configureHype() {
         Log.d("DEBUG", "Reached config");
@@ -286,6 +338,7 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
         addToResolvedInstancesMap(instance);
 // At this point the instance is ready to communicate. Sending and receiving
 // content is possible at any time now.
+        playerFound = true;
     }
 
     public void addToResolvedInstancesMap(Instance instance) {
@@ -395,8 +448,6 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
                 break;
         }
     }
-
-
 
 
 }
