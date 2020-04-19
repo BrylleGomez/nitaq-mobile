@@ -396,4 +396,7 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
         }
     }
 
+
+
+
 }

@@ -32,9 +32,9 @@
 
         <Button
             android:id="@+id/button_generate"
-            android:layout_width="35dp"
+            android:layout_width="33dp"
             android:layout_height="wrap_content"
-            android:text="X" />
+            android:background="@color/navyBlue" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

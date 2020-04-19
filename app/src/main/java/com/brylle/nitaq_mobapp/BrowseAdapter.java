@@ -49,14 +49,17 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
 
     // Inner ViewHolder Class for Package
     public class EventViewHolder extends RecyclerView.ViewHolder {
-        TextView subjectView, moduleView, topicView;
-        FloatingActionButton button;
+        TextView subjectView, moduleView, topicView, download;
+//        FloatingActionButton button;
+
+
         public EventViewHolder(View itemView) {
             super(itemView);
             subjectView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_subject);
             moduleView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_module);
             topicView = itemView.findViewById(R.id.fragment_browse_courses_viewholder_topic);
-            button = itemView.findViewById(R.id.floatingActionButton2);
+            download=itemView.findViewById(R.id.download);
+            // = itemView.findViewById(R.id.floatingActionButton2);
 
         }
 
@@ -70,12 +73,23 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.EventViewH
                     clickListener.onItemClick(pkg);
                 }
             });
+            download.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onItemClick(pkg);
+                }
+            });
+
             if (pkg.getDownloaded()) {
-                button.setImageResource(R.drawable.check_white_24);
-                button.setBackgroundColor(0x242254); // doesn't work
+                download.setText("Downloaded");
+                        //setImageResource(R.drawable.check_white_24);
+               // download.
+                        //setBackgroundColor(0x242254); // doesn't work
             } else {
-                button.setImageResource(R.drawable.darrow);
-                button.setBackgroundColor(0x44336); // doesn't work
+               // download.setText("Downloaded");
+                        //setImageResource(R.drawable.darrow);
+               // download.
+                        //setBackgroundColor(0x44336); // doesn't work
             }
 
         }

@@ -12,16 +12,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -118,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     active = cfragment;
                     return true;
 
-                case R.id.browseBtn:
+                case R.id.allCourses:
                     fragmentManager.beginTransaction().hide(active).show(bfragment).commit();
                     active = bfragment;
                     return true;

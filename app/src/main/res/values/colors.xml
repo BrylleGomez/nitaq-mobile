@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorPrimaryDark">#242254</color>
+    <color name="colorPrimary">#242254</color>
+    <color name="navyBlue">#242254</color>
+    <color name="red">#D32F2F</color>
+
+
     <color name="colorPrimaryLight">#FFCDD2</color>
-    <color name="colorPrimary">#F44336</color>
     <color name="colorTextIcons">#FFFFFF</color>
 
     <color name="colorAccent">#009688</color>
@@ -11,7 +15,6 @@
     <color name="colorDivider">#BDBDBD</color>
 
     <color name="lightBlue">#A0C7E8</color>
-    <color name="navyBlue">#242254</color>
     <color name="bluishGray">#9EABBC</color>
 
 </resources>

@@ -31,7 +31,7 @@ import java.util.Map;
 public class ChatActivity extends AppCompatActivity implements MessageObserver {
     LinearLayout layout;
     RelativeLayout layout_2;
-    ImageView sendButton;
+    TextView sendButton;
     EditText messageArea;
     ScrollView scrollView;
     final String introMessage = "Welcome!";
@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
         sendButton = findViewById(R.id.sendButton);
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
+
 
         // Hardcoded bot message
         generateBotMessage(introMessage);

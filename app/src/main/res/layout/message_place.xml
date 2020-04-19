@@ -6,34 +6,52 @@
     android:gravity="bottom"
     android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/messageArea"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="2dp"
-        android:layout_weight="1"
-        android:background="@drawable/edtbg"
-        android:hint="Your gateway to adventure!"
-        android:maxHeight="80dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#7E888A"
-        android:textSize="22sp" />
-
-    <ImageView
-        android:id="@+id/sendButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_weight="4"
-        android:background="@drawable/bubble_in"
-        android:padding="5dp"
-        app:srcCompat="@drawable/input_send" />
+        android:layout_weight="1"
+        android:background="@drawable/edtbg"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/messageArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/edtbg"
+            android:hint="Your gateway to adventure!"
+            android:maxHeight="80dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#7E888A"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:paddingTop="6dp"
+            android:text="Send"
+            android:textColor="#0000FF"
+            android:textSize="24sp" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/sendButton"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="4"-->
+        <!--            android:padding="5dp"-->
+        <!--            app:srcCompat="@drawable/input_send" />-->
+    </LinearLayout>
 
 
 </LinearLayout>
