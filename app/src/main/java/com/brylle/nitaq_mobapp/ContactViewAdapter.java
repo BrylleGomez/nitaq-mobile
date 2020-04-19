@@ -35,6 +35,8 @@ import android.widget.TextView;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+import static com.brylle.nitaq_mobapp.ChatActivity.getNameFromID;
+
 public class ContactViewAdapter extends BaseAdapter {
 
     private Context context;
@@ -126,20 +128,6 @@ public class ContactViewAdapter extends BaseAdapter {
     protected View.OnTouchListener getOnTouchListener() {
 
         return onTouchListener;
-    }
-
-    private String getNameFromID(String id) {
-        String name;
-        if (id.equals("D183569AE0483287")) {      // Samsung J7
-            name = "Sara";
-        } else if (id.equals("D183569ADA6F6084")) {      // Samsung S6 Edge
-            name = "Marco";
-        } else if (id.equals("D183569AC61F6749")) {      // Samsung S6 Edge
-            name = "Aiva";
-        } else {    // unrecognized device
-            name = "Unknown Device";
-        }
-        return name;
     }
 
 }

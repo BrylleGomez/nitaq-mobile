@@ -92,27 +92,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
 
-        if (mode.equals("multiplayer")) {
-
-            // (I) INTRO AND FIRST QUESTION!
-            generateBotMessage(introMessage);
-            generateBotMessage("Welcome to "+subject+" module, "+adventure+"\n");
-            generateBotMessage("You open your eyes. You look around, only to realize that this room is not your own. You are trapped in a strange, cold, gloomy room. Who could be behind this?\n");
-            generateBotMessage("You are here on your own. You must find a way out.\n");
-            generateBotMessage("Several clues lie around to help you get out. The first one is...\n");
-            generateBotMessage("Clue 1: " + titles.get(0));
-            generateBotMessage(concepts.get(0));
-            generateBotMessage("First question is...");
-            generateBotMessage(questions.get(0));
-            String[] arrOfStr = answers.get(0).split(",", 10);
-            String answersTemp = "";
-            answersTemp += "a) " + arrOfStr[0] + "\n";
-            answersTemp += "b) " + arrOfStr[1] + "\n";
-            answersTemp += "c) " + arrOfStr[2] + "\n";
-            answersTemp += "d) " + arrOfStr[3] + "\n";
-            generateBotMessage(answersTemp);
-
-        }
+        generateBotMessage(introMessage, false);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,31 +135,31 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
             public void onFinish() {
 
                 if (!messageText.equals(answer)){
-                    addMessageBox("Try again...", 3, "Me");
-                    addMessageBox(questions.get(0), 3, "Me");
+                    generateBotMessage("Try again...", false);
+                    generateBotMessage(questions.get(0), false);
                     String[] arrOfStr = answers.get(0).split(",", 10);
                     String answersTemp = "";
                     answersTemp += "a) " + arrOfStr[0] + "\n";
                     answersTemp += "b) " + arrOfStr[1] + "\n";
                     answersTemp += "c) " + arrOfStr[2] + "\n";
                     answersTemp += "d) " + arrOfStr[3] + "\n";
-                    addMessageBox(answersTemp, 3, "Me");
+                    generateBotMessage(answersTemp, false);
                     scrollBottom();
                 } else {
-                    addMessageBox("Congratulations! Your answer is correct!", 3, "Me");
+                    generateBotMessage("Congratulations! Your answer is correct!", false);
                     counter++;
                     // ask second question
-                    addMessageBox("Clue 2: " + titles.get(0), 3, "Me");
-                    addMessageBox(concepts.get(1), 3, "Me");
-                    addMessageBox("Second question is...", 3, "Me");
-                    addMessageBox(questions.get(1), 3, "Me");
+                    generateBotMessage("Clue 2: " + titles.get(0), false);
+                    generateBotMessage(concepts.get(1), false);
+                    generateBotMessage("Second question is...", false);
+                    generateBotMessage(questions.get(1), false);
                     String[] arrOfStr = answers.get(1).split(",", 10);
                     String answersTemp = "";
                     answersTemp += "a) " + arrOfStr[0] + "\n";
                     answersTemp += "b) " + arrOfStr[1] + "\n";
                     answersTemp += "c) " + arrOfStr[2] + "\n";
                     answersTemp += "d) " + arrOfStr[3] + "\n";
-                    addMessageBox(answersTemp, 3, "Me");
+                    generateBotMessage(answersTemp, false);
                     scrollBottom();
                 }
 
@@ -199,26 +179,26 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                 // reply
 
                 if (!messageText.equals(answer)){
-                    addMessageBox("Try again...", 3, "Me");
-                    addMessageBox(questions.get(1), 3, "Me");
+                    generateBotMessage("Try again...", false);
+                    generateBotMessage(questions.get(1), false);
                     String[] arrOfStr = answers.get(1).split(",", 10);
                     String answersTemp = "";
                     answersTemp += "a) " + arrOfStr[0] + "\n";
                     answersTemp += "b) " + arrOfStr[1] + "\n";
                     answersTemp += "c) " + arrOfStr[2] + "\n";
                     answersTemp += "d) " + arrOfStr[3] + "\n";
-                    addMessageBox(answersTemp, 3, "Me");
+                    generateBotMessage(answersTemp, false);
                     scrollBottom();
                 } else {
-                    addMessageBox("Congratulations! Your answer is correct! YOU FINISHED!",3, "Me");
+                    generateBotMessage("Congratulations! Your answer is correct! YOU FINISHED!", false);
                     scrollBottom();
                     counter++;
                 }
 
 //                // ask second question
-//                addMessageBox(concepts.get(1), 3, "Me");
-//                addMessageBox("First question is...", 3, "Me");
-//                addMessageBox(questions.get(1), 3, "Me");
+//                addMessageBox(concepts.get(1));
+//                addMessageBox("First question is...");
+//                addMessageBox(questions.get(1));
 
             }
 
@@ -295,7 +275,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
     }
 
     // BOT MESSAGE
-    private void generateBotMessage(String message) {
+    private void generateBotMessage(String message, boolean foreign) {
 
         final Store store = getStore();
         if(!message.equals("")) {
@@ -307,10 +287,13 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     message = "~<n>";
                 }
                 sendMessage(message, store.getInstance(), true);
+                Log.d("DEBUG", "Message " + message + " sent to " + store.getInstance());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            messageArea.setText("");
+            if (!foreign) {
+                messageArea.setText("");
+            }
         }
 
         scrollBottom();
@@ -349,6 +332,30 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                 // check if special message from bot
                 if (text.equals("<n>")) {                        // <n> means new friend has joined
                     text = getNameFromID(contactName) + " has joined your room!";
+
+                    // start course!
+
+                    if (mode.equals("multiplayer")) {
+
+                        // (I) INTRO AND FIRST QUESTION!
+                        generateBotMessage("Welcome to "+subject+" module, "+adventure+"\n", true);
+                        generateBotMessage("You open your eyes. You look around, only to realize that this room is not your own. You are trapped in a strange, cold, gloomy room. Who could be behind this?\n", true);
+                        generateBotMessage("You are here on your own. You must find a way out.\n", true);
+                        generateBotMessage("Several clues lie around to help you get out. The first one is...\n", true);
+                        generateBotMessage("Clue 1: " + titles.get(0), true);
+                        generateBotMessage(concepts.get(0), true);
+                        generateBotMessage("First question is...", true);
+                        generateBotMessage(questions.get(0), true);
+                        String[] arrOfStr = answers.get(0).split(",", 10);
+                        String answersTemp = "";
+                        answersTemp += "a) " + arrOfStr[0] + "\n";
+                        answersTemp += "b) " + arrOfStr[1] + "\n";
+                        answersTemp += "c) " + arrOfStr[2] + "\n";
+                        answersTemp += "d) " + arrOfStr[3] + "\n";
+                        generateBotMessage(answersTemp, true);
+
+                    }
+
                 }
 
                 isBot = true;
@@ -363,6 +370,21 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                 addMessageBox(text, 1, displayName);
             }
 
+            // process teammate answer
+            if (mode.equals("multiplayer")) {
+                // if answer then bot recognizes it, otherwise ignore bec chat message
+                if (text.charAt(0) == '>') {
+                    text = text.substring(1); // remove '>'
+                    if (counter == 1) {
+                        processInput1(text, correct_answers.get(0));
+                    } else if (counter == 2) {
+                        processInput2(text, correct_answers.get(1));
+                    } else if (counter == 3) {
+                        processInput3(text, correct_answers.get(2));
+                    }
+                }
+            }
+
 
             // If all goes well, this will log the original text
             Log.i("DEBUG", String.format("Hype received a message from: %s %s", instance.getStringIdentifier(), text));
@@ -372,14 +394,14 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
 
     }
 
-    private String getNameFromID(String id) {
+    public static String getNameFromID(String id) {
         String name;
         if (id.equals("D183569AE0483287")) {      // Samsung J7
             name = "Sara";
         } else if (id.equals("D183569ADA6F6084")) {      // Samsung S6 Edge
             name = "Marco";
         } else if (id.equals("D183569AC61F6749")) {      // Samsung S6 Edge
-            name = "Aiva";
+            name = "Martin";
         } else {    // unrecognized device
             name = "Unknown Device";
         }
