@@ -23,26 +23,30 @@
             android:layout_marginBottom="2dp"
             android:layout_weight="1"
             android:background="@drawable/edtbg"
+            android:fontFamily="@font/montserrat"
             android:hint="Your gateway to adventure!"
             android:maxHeight="80dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="15dp"
             android:paddingTop="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="10dp"
             android:textColor="#000000"
-            android:textColorHint="@color/colorSecondaryText"
-            android:textSize="18sp" />
+            android:textColorHint="@color/bluishGray"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:paddingTop="6dp"
+            android:background="@color/bluishGray"
+            android:fontFamily="@font/montserrat"
+            android:foregroundGravity="center"
+            android:gravity="center"
             android:text="Send"
-            android:textColor="#0000FF"
-            android:textSize="24sp" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <!--        <ImageView-->
         <!--            android:id="@+id/sendButton"-->

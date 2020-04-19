@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentManager.beginTransaction().hide(active).show(cfragment).commit();
                     active = cfragment;
                     return true;
+                //this is a comment to push
 
                 case R.id.allCourses:
                     fragmentManager.beginTransaction().hide(active).show(bfragment).commit();

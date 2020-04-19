@@ -6,7 +6,9 @@
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:elevation="2dp"
+        >
 
         <!--
 
@@ -20,35 +22,45 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="60dip"
-            android:layout_weight="0.9">
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/hype_announcement"
                 android:layout_width="wrap_content"
-                android:textStyle="bold"
                 android:layout_height="wrap_content"
-                android:text="Announcement: ---"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Announcement: ---"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/hype_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
+                android:fontFamily="@font/montserrat"
+                android:paddingLeft="20dp"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:paddingBottom="0dp"
                 android:text="TextView"
-                android:textAppearance="@android:style/TextAppearance.Small" />
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/hype_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:paddingTop="8dp"
+                android:fontFamily="@font/montserrat"
+                android:paddingLeft="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp"
                 android:text="Name"
-                android:textAppearance="@android:style/TextAppearance.Small" />
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textColor="@color/bluishGray"
+                android:textSize="12sp" />
 
         </TableLayout>
 

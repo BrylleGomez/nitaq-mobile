@@ -1,6 +1,7 @@
 package com.brylle.nitaq_mobapp;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.hypelabs.hype.Error;
 import com.hypelabs.hype.Hype;
@@ -92,6 +94,8 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
 
+        generateBotMessage(introMessage, false);
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,9 +123,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                             }
                         }
                     }
-
                     messageArea.setText("");
-
                 }
             }
         });
@@ -144,7 +146,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     generateBotMessage(answersTemp, false);
                     scrollBottom();
                 } else {
-                    generateBotMessage("Congratulations! You have ESCAPED the room!", false);
+                    generateBotMessage("Congratulations! You have Escaped the Room!!", false);
 //                    counter++;
 //                    // ask second question
 //                    generateBotMessage("Clue 2: " + titles.get(0), false);
@@ -188,7 +190,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     generateBotMessage(answersTemp, false);
                     scrollBottom();
                 } else {
-                    generateBotMessage("Congratulations! Your answer is correct! YOU FINISHED!", false);
+                    generateBotMessage("Congratulations! You have Escaped the Room!!", false);
                     scrollBottom();
                     counter++;
                 }
@@ -236,7 +238,9 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                 lp2.setMargins(3,3,3,3);
                 lp2.weight = 7.0f;
                 textView.setPadding(25,15,25,25);
-                textView.setTextSize(20);
+                textView.setTextSize(12);
+                Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.montserrat);
+                textView.setTypeface(typeface);
 
                 // type 1 for other players, type2 for your own message, type 3 for GM
                 if(type == 1) {
@@ -299,8 +303,13 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
     }
 
     private void scrollBottom() {
-        scrollView.fullScroll(View.FOCUS_DOWN);
-        scrollView.scrollTo(0, scrollView.getBottom());
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+        //scrollView.scrollTo(0, scrollView.getBottom());
     }
 
     protected Message sendMessage(String text, Instance instance, boolean acknowledge) throws UnsupportedEncodingException {
@@ -315,7 +324,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
 
     @Override
     public void onHypeMessageReceived(Message message, Instance instance) {
-        Log.d("DEBUG", "test");
+
         String text = null;
         try {
             text = new String(message.getData(), "UTF-8");
