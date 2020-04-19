@@ -218,7 +218,7 @@ public class ContactActivity extends Activity implements Store.Delegate, StateOb
 // that the device is actively participating on the network.
         Hype.start();
     }
-
+    //this is a comment to push
     private void configureHype() {
         Log.d("DEBUG", "Reached config");
 

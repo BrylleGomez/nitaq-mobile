@@ -92,6 +92,8 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
 
+        generateBotMessage(introMessage, false);
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,9 +121,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                             }
                         }
                     }
-
                     messageArea.setText("");
-
                 }
             }
         });
@@ -144,20 +144,20 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     generateBotMessage(answersTemp, false);
                     scrollBottom();
                 } else {
-                    generateBotMessage("Congratulations! Your answer is correct!", false);
-                    counter++;
-                    // ask second question
-                    generateBotMessage("Clue 2: " + titles.get(0), false);
-                    generateBotMessage(concepts.get(1), false);
-                    generateBotMessage("Second question is...", false);
-                    generateBotMessage(questions.get(1), false);
-                    String[] arrOfStr = answers.get(1).split(",", 10);
-                    String answersTemp = "";
-                    answersTemp += "a) " + arrOfStr[0] + "\n";
-                    answersTemp += "b) " + arrOfStr[1] + "\n";
-                    answersTemp += "c) " + arrOfStr[2] + "\n";
-                    answersTemp += "d) " + arrOfStr[3] + "\n";
-                    generateBotMessage(answersTemp, false);
+                    generateBotMessage("Congratulations! You have Escaped the Room!!", false);
+//                    counter++;
+//                    // ask second question
+//                    generateBotMessage("Clue 2: " + titles.get(0), false);
+//                    generateBotMessage(concepts.get(1), false);
+//                    generateBotMessage("Second question is...", false);
+//                    generateBotMessage(questions.get(1), false);
+//                    String[] arrOfStr = answers.get(1).split(",", 10);
+//                    String answersTemp = "";
+//                    answersTemp += "a) " + arrOfStr[0] + "\n";
+//                    answersTemp += "b) " + arrOfStr[1] + "\n";
+//                    answersTemp += "c) " + arrOfStr[2] + "\n";
+//                    answersTemp += "d) " + arrOfStr[3] + "\n";
+//                    generateBotMessage(answersTemp, false);
                     scrollBottom();
                 }
 
@@ -188,7 +188,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     generateBotMessage(answersTemp, false);
                     scrollBottom();
                 } else {
-                    generateBotMessage("Congratulations! Your answer is correct! YOU FINISHED!", false);
+                    generateBotMessage("Congratulations! You have Escaped the Room!!", false);
                     scrollBottom();
                     counter++;
                 }
@@ -299,8 +299,13 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
     }
 
     private void scrollBottom() {
-        scrollView.fullScroll(View.FOCUS_DOWN);
-        scrollView.scrollTo(0, scrollView.getBottom());
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+        //scrollView.scrollTo(0, scrollView.getBottom());
     }
 
     protected Message sendMessage(String text, Instance instance, boolean acknowledge) throws UnsupportedEncodingException {
