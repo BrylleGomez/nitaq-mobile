@@ -1,6 +1,7 @@
 package com.brylle.nitaq_mobapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.opengl.Visibility;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +49,7 @@ public class CoursesFragment extends Fragment {
     private SharedPreferences prefs;
     private final String SHARED_PREFS = "com.brylle.nitaq_mobapp.prefs";
     private TextView emptyText;
+    AlertDialog.Builder builder;
 
     /* Initializer Functions */
 
@@ -81,6 +84,7 @@ public class CoursesFragment extends Fragment {
         eventsView = Objects.requireNonNull(getView()).findViewById(R.id.courses_recyclerview);
         prefs = getContext().getSharedPreferences("SHARED_PREFS", Context.MODE_PRIVATE);
         emptyText = Objects.requireNonNull(getView()).findViewById(R.id.text_no_courses);
+        builder = new AlertDialog.Builder(getContext());
 
         firestorePackageList.get()                                                // Fetch all event entries from database
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -216,25 +220,58 @@ public class CoursesFragment extends Fragment {
         // Set up recycler view
         eventsAdapter = new CoursesAdapter(eventsList, new CoursesAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Package pkg) {
+            public void onItemClick(final Package pkg) {
                 // Bind a click listener to the reyclerview item
 
-                // create intent, pass event object members as extras, and start activity
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("pkgSubject", pkg.getSubject());
-                intent.putExtra("pkgTopic", pkg.getTopic());
-                intent.putExtra("pkgModule", pkg.getModule());
-                intent.putExtra("pkgLessons", pkg.getLessons());
-                intent.putExtra("pkgQuestions", pkg.getQuestions());
-                intent.putExtra("pkgAnswers", pkg.getAnswers());
-                intent.putExtra("pkgCorrectAnswers", pkg.getCorrect_answers());
-                intent.putExtra("pkgNext", pkg.getNext());
-                startActivity(intent);
+                // ask if single or multiplayer
+                //Setting message manually and performing action on button click
+                builder.setMessage("Do you want to embark on this adventure alone or with a fellow learner?")
+                        .setCancelable(false)
+                        .setPositiveButton("Alone", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // yes
+
+                                // create intent, pass event object members as extras, and start activity
+                                Intent intent = new Intent(getContext(), ChatActivitySingle.class);
+                                intent.putExtra("pkgSubject", pkg.getSubject());
+                                intent.putExtra("pkgTopic", pkg.getTopic());
+                                intent.putExtra("pkgModule", pkg.getModule());
+                                intent.putExtra("pkgLessons", pkg.getLessons());
+                                intent.putExtra("pkgQuestions", pkg.getQuestions());
+                                intent.putExtra("pkgAnswers", pkg.getAnswers());
+                                intent.putExtra("pkgCorrectAnswers", pkg.getCorrect_answers());
+                                intent.putExtra("pkgNext", pkg.getNext());
+                                startActivity(intent);
+
+                            }
+                        })
+                        .setNegativeButton("Search for Classmates", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // no
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Before you start...");
+                alert.show();
+
+//                // create intent, pass event object members as extras, and start activity
+//                Intent intent = new Intent(getContext(), ChatActivity.class);
+//                intent.putExtra("pkgSubject", pkg.getSubject());
+//                intent.putExtra("pkgTopic", pkg.getTopic());
+//                intent.putExtra("pkgModule", pkg.getModule());
+//                intent.putExtra("pkgLessons", pkg.getLessons());
+//                intent.putExtra("pkgQuestions", pkg.getQuestions());
+//                intent.putExtra("pkgAnswers", pkg.getAnswers());
+//                intent.putExtra("pkgCorrectAnswers", pkg.getCorrect_answers());
+//                intent.putExtra("pkgNext", pkg.getNext());
+//                startActivity(intent);
             }
         });
         eventsView.setLayoutManager(new LinearLayoutManager(getContext()));
         eventsView.setAdapter(eventsAdapter);
-        Toast.makeText(getContext(), "List " + eventsList.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "List " + eventsList.isEmpty(), Toast.LENGTH_SHORT).show();
 
     }
 
