@@ -177,6 +177,7 @@ public class ChatActivitySingle extends AppCompatActivity {
                 scrollView.scrollTo(0, scrollView.getBottom());
                 if(!messageText.equals("")){
                     addMessageBox(messageText, 2, "Me");
+
                     if (counter == 1) {
                         processInput1(messageText, correct_answers.get(0));
                     } else if (counter == 2) {

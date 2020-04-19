@@ -36,6 +36,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
     EditText messageArea;
     ScrollView scrollView;
     final String introMessage = "Welcome!";
+    int counter = 1;
 
     // lesson elements (only used in multiplayer mode, ignored in chat mode)
     private String mode;
@@ -73,14 +74,14 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
             correct_answers = (ArrayList<String>) extras.get("pkgCorrectAnswers");
             titles = (ArrayList<String>) extras.get("pkgNext");
             Log.d("DEBUG","Started ChatActivity in Multiplayer mode, retrieved lesson content!");
-            Log.d("DEBUG","Subject: " + subject);
-            Log.d("DEBUG","Topic: " + topic);
-            Log.d("DEBUG","Adventure: " + adventure);
-            Log.d("DEBUG","Concepts: " + concepts);
-            Log.d("DEBUG","Questions: " + questions);
-            Log.d("DEBUG","Answers: " + answers);
-            Log.d("DEBUG","Correct_answers: " + correct_answers);
-            Log.d("DEBUG","Titles: " + titles);
+//            Log.d("DEBUG","Subject: " + subject);
+//            Log.d("DEBUG","Topic: " + topic);
+//            Log.d("DEBUG","Adventure: " + adventure);
+//            Log.d("DEBUG","Concepts: " + concepts);
+//            Log.d("DEBUG","Questions: " + questions);
+//            Log.d("DEBUG","Answers: " + answers);
+//            Log.d("DEBUG","Correct_answers: " + correct_answers);
+//            Log.d("DEBUG","Titles: " + titles);
 
         }
 
@@ -91,8 +92,27 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
 
-        // Hardcoded bot message
-        generateBotMessage(introMessage);
+        if (mode.equals("multiplayer")) {
+
+            // (I) INTRO AND FIRST QUESTION!
+            generateBotMessage(introMessage);
+            generateBotMessage("Welcome to "+subject+" module, "+adventure+"\n");
+            generateBotMessage("You open your eyes. You look around, only to realize that this room is not your own. You are trapped in a strange, cold, gloomy room. Who could be behind this?\n");
+            generateBotMessage("You are here on your own. You must find a way out.\n");
+            generateBotMessage("Several clues lie around to help you get out. The first one is...\n");
+            generateBotMessage("Clue 1: " + titles.get(0));
+            generateBotMessage(concepts.get(0));
+            generateBotMessage("First question is...");
+            generateBotMessage(questions.get(0));
+            String[] arrOfStr = answers.get(0).split(",", 10);
+            String answersTemp = "";
+            answersTemp += "a) " + arrOfStr[0] + "\n";
+            answersTemp += "b) " + arrOfStr[1] + "\n";
+            answersTemp += "c) " + arrOfStr[2] + "\n";
+            answersTemp += "d) " + arrOfStr[3] + "\n";
+            generateBotMessage(answersTemp);
+
+        }
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,22 +128,122 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     addMessageBox(messageText, 2, "Me");
                     messageArea.setText("");
 
-                    // BotResponse with delay
-                    new CountDownTimer(2000, 1000) {
-                        public void onFinish() {
-                            // bot response
-                            generateBotMessage("Stop talking!");
-                        }
-
-                        public void onTick(long millisUntilFinished) {
-                            // millisUntilFinished    The amount of time until finished.
+                    if (mode.equals("multiplayer")) {
+                        // if answer then bot recognizes it, otherwise ignore bec chat message
+                        if (messageText.charAt(0) == '>') {
+                            messageText = messageText.substring(1); // remove '>'
+                            if (counter == 1) {
+                                processInput1(messageText, correct_answers.get(0));
+                            } else if (counter == 2) {
+                                processInput2(messageText, correct_answers.get(1));
+                            } else if (counter == 3) {
+                                processInput3(messageText, correct_answers.get(2));
                             }
-                        }.start();
+                        }
+                    }
+
+                    messageArea.setText("");
 
                 }
             }
         });
     }
+
+    private void processInput1(final String messageText, final String answer) {
+        scrollBottom();
+        new CountDownTimer(1000, 1000) {
+            public void onFinish() {
+
+                if (!messageText.equals(answer)){
+                    addMessageBox("Try again...", 3, "Me");
+                    addMessageBox(questions.get(0), 3, "Me");
+                    String[] arrOfStr = answers.get(0).split(",", 10);
+                    String answersTemp = "";
+                    answersTemp += "a) " + arrOfStr[0] + "\n";
+                    answersTemp += "b) " + arrOfStr[1] + "\n";
+                    answersTemp += "c) " + arrOfStr[2] + "\n";
+                    answersTemp += "d) " + arrOfStr[3] + "\n";
+                    addMessageBox(answersTemp, 3, "Me");
+                    scrollBottom();
+                } else {
+                    addMessageBox("Congratulations! Your answer is correct!", 3, "Me");
+                    counter++;
+                    // ask second question
+                    addMessageBox("Clue 2: " + titles.get(0), 3, "Me");
+                    addMessageBox(concepts.get(1), 3, "Me");
+                    addMessageBox("Second question is...", 3, "Me");
+                    addMessageBox(questions.get(1), 3, "Me");
+                    String[] arrOfStr = answers.get(1).split(",", 10);
+                    String answersTemp = "";
+                    answersTemp += "a) " + arrOfStr[0] + "\n";
+                    answersTemp += "b) " + arrOfStr[1] + "\n";
+                    answersTemp += "c) " + arrOfStr[2] + "\n";
+                    answersTemp += "d) " + arrOfStr[3] + "\n";
+                    addMessageBox(answersTemp, 3, "Me");
+                    scrollBottom();
+                }
+
+            }
+
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished    The amount of time until finished.
+            }
+        }.start();
+
+    }
+
+    private void processInput2(final String messageText, final String answer) {
+        scrollBottom();
+        new CountDownTimer(1000, 1000) {
+            public void onFinish() {
+                // reply
+
+                if (!messageText.equals(answer)){
+                    addMessageBox("Try again...", 3, "Me");
+                    addMessageBox(questions.get(1), 3, "Me");
+                    String[] arrOfStr = answers.get(1).split(",", 10);
+                    String answersTemp = "";
+                    answersTemp += "a) " + arrOfStr[0] + "\n";
+                    answersTemp += "b) " + arrOfStr[1] + "\n";
+                    answersTemp += "c) " + arrOfStr[2] + "\n";
+                    answersTemp += "d) " + arrOfStr[3] + "\n";
+                    addMessageBox(answersTemp, 3, "Me");
+                    scrollBottom();
+                } else {
+                    addMessageBox("Congratulations! Your answer is correct! YOU FINISHED!",3, "Me");
+                    scrollBottom();
+                    counter++;
+                }
+
+//                // ask second question
+//                addMessageBox(concepts.get(1), 3, "Me");
+//                addMessageBox("First question is...", 3, "Me");
+//                addMessageBox(questions.get(1), 3, "Me");
+
+            }
+
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished    The amount of time until finished.
+            }
+        }.start();
+
+    }
+
+    private void processInput3(String messageText, String answer) {
+
+        new CountDownTimer(1000, 1000) {
+            public void onFinish() {
+                // reply
+
+            }
+
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished    The amount of time until finished.
+            }
+        }.start();
+
+    }
+
 
     public void addMessageBox(final String message, final int type, final String sender){
 
