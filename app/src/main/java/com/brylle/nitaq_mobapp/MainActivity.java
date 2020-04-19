@@ -70,33 +70,33 @@ public class MainActivity extends AppCompatActivity {
                 editor.clear();
                 editor.apply();
 
-                // Create document
-                final HashMap<String,Object> entry = new HashMap<>();
-                entry.put(AppUtils.KEY_SUBJECT, "Math");
-                entry.put(AppUtils.KEY_TOPIC, "Calculus");
-                entry.put(AppUtils.KEY_MODULE, "Integration by Parts");
-                ArrayList<String> lessons = new ArrayList<>(); lessons.add("L1"); lessons.add("L2"); lessons.add("L3");
-                entry.put(AppUtils.KEY_LESSONS, lessons);
-                ArrayList<String> questions = new ArrayList<>(); questions.add("Q1"); questions.add("Q2"); questions.add("Q3");
-                entry.put(AppUtils.KEY_QUESTIONS, questions);
-                ArrayList<String> answers = new ArrayList<>(); answers.add("1,2,3,4"); answers.add("1,2,3,4"); answers.add("1,2,3,4");
-                entry.put(AppUtils.KEY_ANSWERS, answers);
-                ArrayList<String> correct_answers = new ArrayList<>(); correct_answers.add("a"); correct_answers.add("b"); correct_answers.add("d");
-                entry.put(AppUtils.KEY_CORRECT_ANSWERS, correct_answers);
-                ArrayList<String> next = new ArrayList<>(); next.add("next1"); next.add("next2"); next.add("end");
-                entry.put(AppUtils.KEY_NEXT, next);
-
-                // Upload document to Firestore (nested inside above addOnSuccessListener)
-                firestorePackageList.document("package_3").set(entry).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Failed!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+//                // Create document
+//                final HashMap<String,Object> entry = new HashMap<>();
+//                entry.put(AppUtils.KEY_SUBJECT, "Math");
+//                entry.put(AppUtils.KEY_TOPIC, "Calculus");
+//                entry.put(AppUtils.KEY_MODULE, "Integration by Parts");
+//                ArrayList<String> lessons = new ArrayList<>(); lessons.add("L1"); lessons.add("L2"); lessons.add("L3");
+//                entry.put(AppUtils.KEY_LESSONS, lessons);
+//                ArrayList<String> questions = new ArrayList<>(); questions.add("Q1"); questions.add("Q2"); questions.add("Q3");
+//                entry.put(AppUtils.KEY_QUESTIONS, questions);
+//                ArrayList<String> answers = new ArrayList<>(); answers.add("1,2,3,4"); answers.add("1,2,3,4"); answers.add("1,2,3,4");
+//                entry.put(AppUtils.KEY_ANSWERS, answers);
+//                ArrayList<String> correct_answers = new ArrayList<>(); correct_answers.add("a"); correct_answers.add("b"); correct_answers.add("d");
+//                entry.put(AppUtils.KEY_CORRECT_ANSWERS, correct_answers);
+//                ArrayList<String> next = new ArrayList<>(); next.add("next1"); next.add("next2"); next.add("end");
+//                entry.put(AppUtils.KEY_NEXT, next);
+//
+//                // Upload document to Firestore (nested inside above addOnSuccessListener)
+//                firestorePackageList.document("package_3").set(entry).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "Failed!", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
 
             }
         });

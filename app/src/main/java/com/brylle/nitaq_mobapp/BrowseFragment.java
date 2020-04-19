@@ -42,6 +42,7 @@ public class BrowseFragment extends Fragment {
     private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
     // set up preferences
     private SharedPreferences prefs;
+    private final String SHARED_PREFS = "com.brylle.nitaq_mobapp.prefs";
 
     /* Initializer Functions */
 
@@ -78,7 +79,8 @@ public class BrowseFragment extends Fragment {
         // Initialize Objects
         browseView = Objects.requireNonNull(getView()).findViewById(R.id.browse_recyclerview);
         // get the default SharedPreferences object
-        prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
+        prefs = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        browseList = new ArrayList<>();
 
 //        // Fetches all event database entries and stores them in an array list of event objects
 //        for (int i = 0; i < 10; i++) {
@@ -114,12 +116,7 @@ public class BrowseFragment extends Fragment {
         //refreshFragment();
         browseView = Objects.requireNonNull(getView()).findViewById(R.id.browse_recyclerview);
         prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
-
-//        // Fetches all event database entries and stores them in an array list of event objects
-//        for (int i = 0; i < 10; i++) {
-//            addRandomEvents();
-//        }
-//        loadRecyclerView();
+        browseList = new ArrayList<>();
 
         firestorePackageList.get()                                                // Fetch all event entries from database
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -157,14 +154,14 @@ public class BrowseFragment extends Fragment {
 
     /* Helper Functions */
 
-    private void refreshFragment() {
-        browseList = new ArrayList<>(); // reset arraylist
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if (Build.VERSION.SDK_INT >= 26) {
-            ft.setReorderingAllowed(false);
-        }
-        ft.detach(this).attach(this).commit();
-    }
+//    private void refreshFragment() {
+//        browseList = new ArrayList<>(); // reset arraylist
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        if (Build.VERSION.SDK_INT >= 26) {
+//            ft.setReorderingAllowed(false);
+//        }
+//        ft.detach(this).attach(this).commit();
+//    }
 
     private void addFetchedEventToArrayList(DocumentSnapshot fetchedPackage) {
 
@@ -222,7 +219,7 @@ public class BrowseFragment extends Fragment {
                     editor.apply();
 
                     // refresh -- very conky pls replace
-                    refreshFragment();
+                    Refresh();
 
                 } else {
                     Toast.makeText(getContext(), "Already downloaded...", Toast.LENGTH_SHORT).show();

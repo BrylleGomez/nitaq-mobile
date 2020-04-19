@@ -98,9 +98,15 @@ public class ContactViewAdapter extends BaseAdapter {
         Store store = (Store)getItem(position);
 
         TextView displayName = (TextView)vi.findViewById(R.id.hype_id);
+        TextView actualDisplayName = (TextView)vi.findViewById(R.id.hype_name);
         TextView announcement = (TextView)vi.findViewById(R.id.hype_announcement);
 
 //        ImageView contentIndicator = (ImageView)vi.findViewById(R.id.new_content);
+
+        // Bonus display name
+        String contactName = store.getInstance().getStringIdentifier();
+        String actualName = getNameFromID(contactName);
+        actualDisplayName.setText(actualName);
 
         displayName.setText(store.getInstance().getStringIdentifier());
 
@@ -121,4 +127,19 @@ public class ContactViewAdapter extends BaseAdapter {
 
         return onTouchListener;
     }
+
+    private String getNameFromID(String id) {
+        String name;
+        if (id.equals("D183569AE0483287")) {      // Samsung J7
+            name = "Sara";
+        } else if (id.equals("D183569ADA6F6084")) {      // Samsung S6 Edge
+            name = "Marco";
+        } else if (id.equals("D183569AC61F6749")) {      // Samsung S6 Edge
+            name = "Aiva";
+        } else {    // unrecognized device
+            name = "Unknown Device";
+        }
+        return name;
+    }
+
 }

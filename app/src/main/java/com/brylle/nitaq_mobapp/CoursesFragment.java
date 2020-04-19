@@ -3,6 +3,7 @@ package com.brylle.nitaq_mobapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +45,8 @@ public class CoursesFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();                          // retrieve Firestore instance
     private CollectionReference firestorePackageList = firebaseFirestore.collection("packages");    // retrieve reference to "events" collection// recycler view to display objects
     private SharedPreferences prefs;
+    private final String SHARED_PREFS = "com.brylle.nitaq_mobapp.prefs";
+    private TextView emptyText;
 
     /* Initializer Functions */
 
@@ -75,8 +79,8 @@ public class CoursesFragment extends Fragment {
 
         // Initialize Objects
         eventsView = Objects.requireNonNull(getView()).findViewById(R.id.courses_recyclerview);
-        prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
-
+        prefs = getContext().getSharedPreferences("SHARED_PREFS", Context.MODE_PRIVATE);
+        emptyText = Objects.requireNonNull(getView()).findViewById(R.id.text_no_courses);
 
         firestorePackageList.get()                                                // Fetch all event entries from database
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -106,6 +110,13 @@ public class CoursesFragment extends Fragment {
                     Log.d("CoursesFragment", "Error fetching packages: ", e);
                 }
             });
+
+        // to show if empty or not
+        if (eventsList.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.setVisibility(View.GONE);
+        }
 
     }
 
@@ -157,12 +168,7 @@ public class CoursesFragment extends Fragment {
         //refreshFragment();
         eventsView = Objects.requireNonNull(getView()).findViewById(R.id.courses_recyclerview);
         prefs = getContext().getSharedPreferences("com.brylle.nitaq_mobapp.prefs", Context.MODE_PRIVATE);
-
-//        // Fetches all event database entries and stores them in an array list of event objects
-//        for (int i = 0; i < 10; i++) {
-//            addRandomEvents();
-//        }
-//        loadRecyclerView();
+        eventsList = new ArrayList<>();
 
         firestorePackageList.get()                                                // Fetch all event entries from database
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -170,7 +176,14 @@ public class CoursesFragment extends Fragment {
                     public void onSuccess(QuerySnapshot fetchedPackages) {
 
                         for (DocumentSnapshot fetchedPackage : fetchedPackages) {       // Iterate through all fetched events
-                            addFetchedEventToArrayList(fetchedPackage);
+
+                            // check if package is part of downloaded
+                            String tempModule = fetchedPackage.getString(AppUtils.KEY_MODULE);
+                            String downloaded = prefs.getString(tempModule, "0");
+                            if (!downloaded.equals("0")) {
+                                addFetchedEventToArrayList(fetchedPackage);
+                            }
+
                         }
 
                         // load recycler view from adapter
@@ -185,6 +198,14 @@ public class CoursesFragment extends Fragment {
                         Log.d("CoursesFragment", "Error fetching packages: ", e);
                     }
                 });
+
+        // to show if empty or not
+        if (eventsList.size() == 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.setVisibility(View.GONE);
+        }
+
     }
 
     private void loadRecyclerView() {
@@ -213,6 +234,7 @@ public class CoursesFragment extends Fragment {
         });
         eventsView.setLayoutManager(new LinearLayoutManager(getContext()));
         eventsView.setAdapter(eventsAdapter);
+        Toast.makeText(getContext(), "List " + eventsList.toString(), Toast.LENGTH_SHORT).show();
 
     }
 
