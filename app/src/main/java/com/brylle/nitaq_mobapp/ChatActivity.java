@@ -144,20 +144,20 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     generateBotMessage(answersTemp, false);
                     scrollBottom();
                 } else {
-                    generateBotMessage("Congratulations! Your answer is correct!", false);
-                    counter++;
-                    // ask second question
-                    generateBotMessage("Clue 2: " + titles.get(0), false);
-                    generateBotMessage(concepts.get(1), false);
-                    generateBotMessage("Second question is...", false);
-                    generateBotMessage(questions.get(1), false);
-                    String[] arrOfStr = answers.get(1).split(",", 10);
-                    String answersTemp = "";
-                    answersTemp += "a) " + arrOfStr[0] + "\n";
-                    answersTemp += "b) " + arrOfStr[1] + "\n";
-                    answersTemp += "c) " + arrOfStr[2] + "\n";
-                    answersTemp += "d) " + arrOfStr[3] + "\n";
-                    generateBotMessage(answersTemp, false);
+                    generateBotMessage("Congratulations! You have ESCAPED the room!", false);
+//                    counter++;
+//                    // ask second question
+//                    generateBotMessage("Clue 2: " + titles.get(0), false);
+//                    generateBotMessage(concepts.get(1), false);
+//                    generateBotMessage("Second question is...", false);
+//                    generateBotMessage(questions.get(1), false);
+//                    String[] arrOfStr = answers.get(1).split(",", 10);
+//                    String answersTemp = "";
+//                    answersTemp += "a) " + arrOfStr[0] + "\n";
+//                    answersTemp += "b) " + arrOfStr[1] + "\n";
+//                    answersTemp += "c) " + arrOfStr[2] + "\n";
+//                    answersTemp += "d) " + arrOfStr[3] + "\n";
+//                    generateBotMessage(answersTemp, false);
                     scrollBottom();
                 }
 
