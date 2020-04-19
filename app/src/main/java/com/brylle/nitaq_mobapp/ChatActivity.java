@@ -315,7 +315,7 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
 
     @Override
     public void onHypeMessageReceived(Message message, Instance instance) {
-
+        Log.d("DEBUG", "test");
         String text = null;
         try {
             text = new String(message.getData(), "UTF-8");
