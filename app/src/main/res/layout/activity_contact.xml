@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center|center_horizontal"
         android:paddingBottom="14dp"
-        android:textColor="#008B8B"
+        android:textColor="@color/bluishGray"
         android:textSize="14sp" />
 
     <ListView
@@ -29,12 +29,13 @@
 
         <TextView
             android:id="@+id/hype_announcement"
-            android:gravity="center"
             android:layout_width="212dp"
             android:layout_height="46dp"
             android:layout_weight="1"
-            android:textStyle="bold"
-            android:text="Own Announcement" />
+            android:gravity="center"
+            android:text="Own Announcement"
+            android:textColor="@android:color/transparent"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
