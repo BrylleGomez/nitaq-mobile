@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.contactsBtn:
                     // create intent, pass event object members as extras, and start activity
                     Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+                    intent.putExtra("mode", "chat");
                     startActivity(intent);
                     return true;
 

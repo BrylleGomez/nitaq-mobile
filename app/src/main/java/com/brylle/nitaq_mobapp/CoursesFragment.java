@@ -248,6 +248,19 @@ public class CoursesFragment extends Fragment {
                         .setNegativeButton("Search for Classmates", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // no
+
+                                Intent intent = new Intent(getContext(), ContactActivity.class);
+                                intent.putExtra("mode", "multiplayer"); // pass indicator that this is multiplayer!
+                                intent.putExtra("pkgSubject", pkg.getSubject());
+                                intent.putExtra("pkgTopic", pkg.getTopic());
+                                intent.putExtra("pkgModule", pkg.getModule());
+                                intent.putExtra("pkgLessons", pkg.getLessons());
+                                intent.putExtra("pkgQuestions", pkg.getQuestions());
+                                intent.putExtra("pkgAnswers", pkg.getAnswers());
+                                intent.putExtra("pkgCorrectAnswers", pkg.getCorrect_answers());
+                                intent.putExtra("pkgNext", pkg.getNext());
+                                startActivity(intent);
+
                             }
                         });
                 //Creating dialog box

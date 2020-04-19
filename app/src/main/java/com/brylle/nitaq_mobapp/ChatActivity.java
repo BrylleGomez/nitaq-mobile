@@ -25,6 +25,7 @@ import com.hypelabs.hype.MessageInfo;
 import com.hypelabs.hype.MessageObserver;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,18 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
     EditText messageArea;
     ScrollView scrollView;
     final String introMessage = "Welcome!";
+
+    // lesson elements (only used in multiplayer mode, ignored in chat mode)
+    private String mode;
+    private String subject;
+    private String topic;
+    private String adventure;
+    private ArrayList<String> concepts;
+    private ArrayList<String> questions;
+    private ArrayList<String> answers;
+    private ArrayList<String> correct_answers;
+    private ArrayList<String> titles;
+
 //    Firebase reference1, reference2;
 
     public static String INTENT_EXTRA_STORE = "com.hypelabs.store";
@@ -46,6 +59,30 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
         final Store store = getStore();
         Hype.addMessageObserver(this);
         Hype.addMessageObserver(this);
+
+        // Retrieve lesson content from intent if multiplayer
+        Bundle extras = getIntent().getExtras();
+        mode = extras.getString("mode");
+        if (mode.equals("multiplayer")) {
+            subject = extras.getString("pkgSubject");
+            topic = extras.getString("pkgTopic");
+            adventure = extras.getString("pkgModule");
+            concepts = (ArrayList<String>) extras.get("pkgLessons");
+            questions = (ArrayList<String>) extras.get("pkgQuestions");
+            answers = (ArrayList<String>) extras.get("pkgAnswers");
+            correct_answers = (ArrayList<String>) extras.get("pkgCorrectAnswers");
+            titles = (ArrayList<String>) extras.get("pkgNext");
+            Log.d("DEBUG","Started ChatActivity in Multiplayer mode, retrieved lesson content!");
+            Log.d("DEBUG","Subject: " + subject);
+            Log.d("DEBUG","Topic: " + topic);
+            Log.d("DEBUG","Adventure: " + adventure);
+            Log.d("DEBUG","Concepts: " + concepts);
+            Log.d("DEBUG","Questions: " + questions);
+            Log.d("DEBUG","Answers: " + answers);
+            Log.d("DEBUG","Correct_answers: " + correct_answers);
+            Log.d("DEBUG","Titles: " + titles);
+
+        }
 
         Log.d("DEBUG",store.toString());
         layout = findViewById(R.id.layout1);
@@ -71,28 +108,18 @@ public class ChatActivity extends AppCompatActivity implements MessageObserver {
                     addMessageBox(messageText, 2, "Me");
                     messageArea.setText("");
 
-                    // BotResponse
-                    generateBotMessage("Stop talking!");
+                    // BotResponse with delay
+                    new CountDownTimer(2000, 1000) {
+                        public void onFinish() {
+                            // bot response
+                            generateBotMessage("Stop talking!");
+                        }
 
-//                    new CountDownTimer(2000, 1000) {
-//                        public void onFinish() {
-//                            addMessageBox("I'm a bot!", 3);
-//
-//                            new CountDownTimer(2000, 1000) {
-//                                public void onFinish() {
-//                                    addMessageBox("I'm another player!", 1);
-//                                }
-//
-//                                public void onTick(long millisUntilFinished) {
-//                                    // millisUntilFinished    The amount of time until finished.
-//                                }
-//                            }.start();
-//                        }
-//
-//                        public void onTick(long millisUntilFinished) {
-//                            // millisUntilFinished    The amount of time until finished.
-//                        }
-//                    }.start();
+                        public void onTick(long millisUntilFinished) {
+                            // millisUntilFinished    The amount of time until finished.
+                            }
+                        }.start();
+
                 }
             }
         });
