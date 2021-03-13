@@ -1,6 +1,6 @@
 # Nitaq – Gamified Approach to Learning in Low-Latency Areas
 
-![NITAQ LOGO](https://github.com/BrylleGomez/nitaq-mobile/blob/master/ARABIC_bright_transparent.png)
+![NITAQ LOGO](https://github.com/BrylleGomez/nitaq-mobile/blob/master/ARABIC_dark_transparent.png)
 
 In a world ravaged by COVID-19, education is one of the hardest hit sectors especially in low-income and low-latency areas. To combat this, my team and I have proposed a platforming that involves 2 major components: (1) a community-driven effort of converting online course materials into text-based adventure games for young children to enjoy and (2) a mobile application that can download a bulk of these text-based adventure games while consuming minimal bandwidth and delivering sustained functionality even in the absence of an Internet connection. Moreover, the mobile application uses the mesh networking technology, HypeLabs, to enable young children to enjoy these gamified learning courses together through peer-to-peer Wi-Fi connections.
 
